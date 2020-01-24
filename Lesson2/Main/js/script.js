@@ -13,7 +13,7 @@ console.log("Тип переменной deposit: " + typeof(deposit));
 console.log("Длина строки addExpenses: " + addExpenses.length);
 console.log("Период равен " + period + " месяцев");
 console.log(`Цель заработать ${mission} рублей`);
-addExpenses = addExpenses.toLowerCase().split(',')
+addExpenses = addExpenses.toLowerCase().split(', ');
 console.log("После приведения строки addExpenses к нижнему регистру и преобразованию в массив : " + addExpenses);
 
 let budgetDay = money / 30;
