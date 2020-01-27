@@ -1,7 +1,6 @@
-'use strict';
+"use strict";
 // 1) объявление переменных и присвоение значений по заданию
-let money = 0,
-    income = "Profi.ru",
+let income = "Profi.ru",
     addExpenses = "Коммунальные платежы, продукты, кружки, проезд",
     deposit = true,
     mission = 140000,
@@ -18,14 +17,14 @@ addExpenses = addExpenses.toLowerCase().split(', ');
 console.log("После приведения строки addExpenses к нижнему регистру и преобразованию в массив : " + addExpenses);
 
 // 3) Запрос месячного дохода, расходы, депозита, расходы
-money = prompt('Введите ваш месячный доход');
+let money = +prompt('Введите ваш месячный доход');
 addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую');
 deposit = confirm('Есть ли у вас депозит в банке?');
-let expenses1 = prompt('Введите обязательную статью расходов?');
-let amount1 = prompt('Во сколько это обойдется?');
-let expenses2 = prompt('Введите cледующую обязательную статью расходов?');
-let amount2 = prompt('Во сколько это обойдется?');
-let budgetMonth = parseInt(money) - parseInt(amount1) - parseInt(amount2);
+let expenses1 = prompt('Введите обязательную статью расходов?'),
+    amount1 = +prompt('Во сколько это обойдется?'),
+    expenses2 = prompt('Введите cледующую обязательную статью расходов?'),
+    amount2 = +prompt('Во сколько это обойдется?'),
+    budgetMonth = money - amount1 - amount2;
 console.log('Цель будет достигнута за: ' + Math.ceil(mission / budgetMonth) + 'месяцев');
 let budgetDay = Math.floor(budgetMonth / 30);
 console.log("Дневной бюджет равен " + budgetDay);
@@ -37,5 +36,5 @@ if (budgetDay >= 1200) {
 } else if ((budgetDay >= 0) && (budgetDay < 600)) {
     console.log('К сожалению у вас уровень дохода ниже среднего');
 } else {
-    console.log('Что то пошло не так');
+    console.log('Что-то пошло не так');
 }
