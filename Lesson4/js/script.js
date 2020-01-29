@@ -6,6 +6,9 @@ let income = "Profi.ru",
     period = 5,
     money = +prompt('Введите ваш месячный доход');
 addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую');
+addExpenses = addExpenses.toLowerCase().split(', ');
+console.log("После приведения строки addExpenses к нижнему регистру и преобразованию в массив : " + addExpenses);
+
 deposit = confirm('Есть ли у вас депозит в банке?');
 
 const showTypeOf = function(data) {
@@ -16,8 +19,6 @@ showTypeOf(money);
 showTypeOf(income);
 showTypeOf(deposit);
 
-addExpenses = addExpenses.toLowerCase().split(', ');
-console.log("После приведения строки addExpenses к нижнему регистру и преобразованию в массив : " + addExpenses);
 
 let expenses1 = prompt('Введите обязательную статью расходов?'),
     amount1 = +prompt('Во сколько это обойдется?'),
