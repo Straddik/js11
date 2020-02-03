@@ -102,10 +102,13 @@ let appData = {
                 appData.percentDeposit = prompt('Какой годовой процент?', 10);
             }
             while (!isNumber(appData.percentDeposit));
+            appData.percentDeposit = +appData.percentDeposit;
+
             do {
                 appData.moneyDeposit = prompt('Какая сумма заложена?', 10000);
             }
             while (!isNumber(appData.moneyDeposit));
+            appData.moneyDeposit = +appData.moneyDeposit;
 
         }
     },
