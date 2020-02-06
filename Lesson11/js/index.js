@@ -15,8 +15,10 @@ let buttonCalc = document.getElementById('start'),
     resultTargetMonth = document.getElementsByClassName('result-total')[6],
     inputSalaryAmount = document.querySelector('.salary-amount'),
     inputIncomeItems = document.querySelectorAll('.income-items'),
-    inputExpensesTitle = document.querySelector('.expenses-title'),
-    inputExpensesAmount = document.querySelector('.expenses-amount'),
+    inputIncomeAmounts = document.querySelectorAll('.income-amount'),
+    inputIncomeTitles = document.querySelectorAll('.income-title'),
+    inputExpensesTitle = document.querySelectorAll('.expenses-title'),
+    inputExpensesAmount = document.querySelectorAll('.expenses-amount'),
     inputAdditionalIncomeItems = document.querySelectorAll('.additional_income-item'),
     expensesItems = document.querySelectorAll('.expenses-items'),
     inputAdditionalExpenseAmount = document.querySelector('.additional_expenses-item'),
@@ -55,16 +57,38 @@ let appData = {
     },
     addExpensesBlock: function() {
         let cloneExpensesItem = expensesItems[0].cloneNode(true);
+        cloneExpensesItem.childNodes.forEach((item) => {
+            item.value = '';
+        });
         expensesItems[0].parentNode.insertBefore(cloneExpensesItem, buttonPlusExpense);
         expensesItems = document.querySelectorAll('.expenses-items');
+        inputExpensesAmount = document.querySelectorAll('.expenses-amount');
+        inputExpensesAmount.forEach((item) => item.addEventListener('input', () => {
+            item.value = item.value.replace(/[^\d]/g, '');
+        }));
+        inputExpensesTitle = document.querySelectorAll('.expenses-title');
+        inputExpensesTitle.forEach((item) => item.addEventListener('input', () => {
+            item.value = item.value.replace(/[^а-я А-Я \W]/g, '');
+        }));
         if (expensesItems.length === 3) {
             buttonPlusExpense.style.display = 'none';
         };
     },
     addIncomeBlock: function() {
         let cloneIncomeItem = inputIncomeItems[0].cloneNode(true);
+        cloneIncomeItem.childNodes.forEach((item) => {
+            item.value = '';
+        });
         inputIncomeItems[0].parentNode.insertBefore(cloneIncomeItem, buttonPlusIncome);
         inputIncomeItems = document.querySelectorAll('.income-items');
+        inputIncomeAmounts = document.querySelectorAll('.income-amount');
+        inputIncomeTitles = document.querySelectorAll('.income-title');
+        inputIncomeAmounts.forEach((item) => item.addEventListener('input', () => {
+            item.value = item.value.replace(/[^\d]/g, '');
+        }));
+        inputIncomeTitles.forEach((item) => item.addEventListener('input', () => {
+            item.value = item.value.replace(/[^а-я А-Я \W]/g, '');
+        }));
         if (inputIncomeItems.length === 3) {
             buttonPlusIncome.style.display = 'none';
         };
@@ -183,7 +207,6 @@ let appData = {
 }
 
 buttonCalc.disabled = true;
-console.log(buttonCalc.disabled);
 buttonPlusExpense.addEventListener('click', appData.addExpensesBlock);
 buttonPlusIncome.addEventListener('click', appData.addIncomeBlock);
 inputPeriodSelect.addEventListener('input', appData.setPeriod);
@@ -192,9 +215,33 @@ inputSalaryAmount.addEventListener('input', () => {
         buttonCalc.disabled = false;
         buttonCalc.addEventListener('click', appData.start);
     } else {
+        inputSalaryAmount.value = inputSalaryAmount.value.replace(/[^\d]/g, '');
         buttonCalc.disabled = true;
     }
-})
+});
+inputTargetAmount.addEventListener('input', () => {
+    inputTargetAmount.value = inputTargetAmount.value.replace(/[^\d]/g, '');
+});
+inputAdditionalExpenseAmount.addEventListener('input', () => {
+    inputAdditionalExpenseAmount.value = inputAdditionalExpenseAmount.value.replace(/[^а-я А-Я \W]/g, '');
+});
+inputAdditionalIncomeItems.forEach((item) => item.addEventListener('input', () => {
+    item.value = item.value.replace(/[^а-я А-Я \W]/g, '');
+}));
+inputIncomeAmounts.forEach((item) => item.addEventListener('input', () => {
+    item.value = item.value.replace(/[^\d]/g, '');
+}));
+inputIncomeTitles.forEach((item) => item.addEventListener('input', () => {
+    item.value = item.value.replace(/[^а-я А-Я \W]/g, '');
+}));
+inputExpensesAmount.forEach((item) => item.addEventListener('input', () => {
+    item.value = item.value.replace(/[^\d]/g, '');
+}));
+inputExpensesTitle.forEach((item) => item.addEventListener('input', () => {
+    item.value = item.value.replace(/[^а-я А-Я \W]/g, '');
+}));
+
+
 
 
 
