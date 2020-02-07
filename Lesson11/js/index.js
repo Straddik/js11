@@ -15,12 +15,12 @@ let buttonCalc = document.getElementById('start'),
     resultTargetMonth = document.getElementsByClassName('result-total')[6],
     inputSalaryAmount = document.querySelector('.salary-amount'),
     inputIncomeItems = document.querySelectorAll('.income-items'),
-    inputIncomeAmounts = document.querySelectorAll('.income-amount'),
-    inputIncomeTitles = document.querySelectorAll('.income-title'),
-    inputExpensesTitle = document.querySelectorAll('.expenses-title'),
-    inputExpensesAmount = document.querySelectorAll('.expenses-amount'),
-    inputAdditionalIncomeItems = document.querySelectorAll('.additional_income-item'),
+    // inputIncomeAmounts = document.querySelectorAll('.income-amount'),
+    // inputIncomeTitles = document.querySelectorAll('.income-title'),
     expensesItems = document.querySelectorAll('.expenses-items'),
+    // inputExpensesTitle = document.querySelectorAll('.expenses-title'),
+    // inputExpensesAmount = document.querySelectorAll('.expenses-amount'),
+    inputAdditionalIncomeItems = document.querySelectorAll('.additional_income-item'),
     inputAdditionalExpenseAmount = document.querySelector('.additional_expenses-item'),
     inputDepositAmount = document.querySelector('.deposit-amount'),
     inputDepositPercent = document.querySelector('.deposit-percent'),
@@ -62,14 +62,20 @@ let appData = {
         });
         expensesItems[0].parentNode.insertBefore(cloneExpensesItem, buttonPlusExpense);
         expensesItems = document.querySelectorAll('.expenses-items');
-        inputExpensesAmount = document.querySelectorAll('.expenses-amount');
-        inputExpensesAmount.forEach((item) => item.addEventListener('input', () => {
-            item.value = item.value.replace(/[^\d]/g, '');
+        expensesItems.forEach(item => item.querySelector('.expenses-amount').addEventListener('input', (e) => {
+            e.target.value = e.target.value.replace(/[^\d]/g, '');
         }));
-        inputExpensesTitle = document.querySelectorAll('.expenses-title');
-        inputExpensesTitle.forEach((item) => item.addEventListener('input', () => {
-            item.value = item.value.replace(/[^а-я А-Я \W]/g, '');
+        expensesItems.forEach(item => item.querySelector('.expenses-title').addEventListener('input', (e) => {
+            e.target.value = e.target.value.replace(/[^а-я А-Я \W]/g, '');
         }));
+        // inputExpensesAmount = document.querySelectorAll('.expenses-amount');
+        // inputExpensesAmount.forEach((item) => item.addEventListener('input', () => {
+        //     item.value = item.value.replace(/[^\d]/g, '');
+        // }));
+        // inputExpensesTitle = document.querySelectorAll('.expenses-title');
+        // inputExpensesTitle.forEach((item) => item.addEventListener('input', () => {
+        //     item.value = item.value.replace(/[^а-я А-Я \W]/g, '');
+        // }));
         if (expensesItems.length === 3) {
             buttonPlusExpense.style.display = 'none';
         };
@@ -81,14 +87,21 @@ let appData = {
         });
         inputIncomeItems[0].parentNode.insertBefore(cloneIncomeItem, buttonPlusIncome);
         inputIncomeItems = document.querySelectorAll('.income-items');
-        inputIncomeAmounts = document.querySelectorAll('.income-amount');
-        inputIncomeTitles = document.querySelectorAll('.income-title');
-        inputIncomeAmounts.forEach((item) => item.addEventListener('input', () => {
-            item.value = item.value.replace(/[^\d]/g, '');
+        inputIncomeItems.forEach(item => item.querySelector('.income-amount').addEventListener('input', (e) => {
+            e.target.value = e.target.value.replace(/[^\d]/g, '');
         }));
-        inputIncomeTitles.forEach((item) => item.addEventListener('input', () => {
-            item.value = item.value.replace(/[^а-я А-Я \W]/g, '');
+        inputIncomeItems.forEach(item => item.querySelector('.income-title').addEventListener('input', (e) => {
+            e.target.value = e.target.value.replace(/[^а-я А-Я \W]/g, '');
         }));
+
+        // inputIncomeAmounts = document.querySelectorAll('.income-amount');
+        // inputIncomeTitles = document.querySelectorAll('.income-title');
+        // inputIncomeAmounts.forEach((item) => item.addEventListener('input', () => {
+        //     item.value = item.value.replace(/[^\d]/g, '');
+        // }));
+        // inputIncomeTitles.forEach((item) => item.addEventListener('input', () => {
+        //     item.value = item.value.replace(/[^а-я А-Я \W]/g, '');
+        // }));
         if (inputIncomeItems.length === 3) {
             buttonPlusIncome.style.display = 'none';
         };
@@ -121,7 +134,7 @@ let appData = {
         addExpenses.forEach(function(item) {
             item = item.trim();
             if (item !== '') {
-                appData.addExpenses = addExpenses;
+                appData.addExpenses.push(item);
             }
         })
     },
@@ -228,18 +241,30 @@ inputAdditionalExpenseAmount.addEventListener('input', () => {
 inputAdditionalIncomeItems.forEach((item) => item.addEventListener('input', () => {
     item.value = item.value.replace(/[^а-я А-Я \W]/g, '');
 }));
-inputIncomeAmounts.forEach((item) => item.addEventListener('input', () => {
-    item.value = item.value.replace(/[^\d]/g, '');
+inputIncomeItems.forEach(item => item.querySelector('.income-amount').addEventListener('input', (e) => {
+    e.target.value = e.target.value.replace(/[^\d]/g, '');
 }));
-inputIncomeTitles.forEach((item) => item.addEventListener('input', () => {
-    item.value = item.value.replace(/[^а-я А-Я \W]/g, '');
+inputIncomeItems.forEach(item => item.querySelector('.income-title').addEventListener('input', (e) => {
+    e.target.value = e.target.value.replace(/[^а-я А-Я \W]/g, '');
 }));
-inputExpensesAmount.forEach((item) => item.addEventListener('input', () => {
-    item.value = item.value.replace(/[^\d]/g, '');
+// inputIncomeAmounts.forEach((item) => item.addEventListener('input', () => {
+//     item.value = item.value.replace(/[^\d]/g, '');
+// }));
+// inputIncomeTitles.forEach((item) => item.addEventListener('input', () => {
+//     item.value = item.value.replace(/[^а-я А-Я \W]/g, '');
+// }));
+expensesItems.forEach(item => item.querySelector('.expenses-amount').addEventListener('input', (e) => {
+    e.target.value = e.target.value.replace(/[^\d]/g, '');
 }));
-inputExpensesTitle.forEach((item) => item.addEventListener('input', () => {
-    item.value = item.value.replace(/[^а-я А-Я \W]/g, '');
+expensesItems.forEach(item => item.querySelector('.expenses-title').addEventListener('input', (e) => {
+    e.target.value = e.target.value.replace(/[^а-я А-Я \W]/g, '');
 }));
+// inputExpensesAmount.forEach((item) => item.addEventListener('input', () => {
+//     item.value = item.value.replace(/[^\d]/g, '');
+// }));
+// inputExpensesTitle.forEach((item) => item.addEventListener('input', () => {
+//     item.value = item.value.replace(/[^а-я А-Я \W]/g, '');
+// }));
 
 
 
