@@ -97,7 +97,7 @@ let appData = {
         addExpenses.forEach(function(item) {
             item = item.trim();
             if (item !== '') {
-                appData.addExpenses = addExpenses;
+                appData.addExpenses.push(item);
             }
         })
     },
