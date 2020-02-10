@@ -272,6 +272,9 @@ let appData = {
         expensesItems = document.querySelectorAll('.expenses-items');
         if (expensesItems[1]) expensesItems[1].remove();
         if (expensesItems[2]) expensesItems[2].remove();
+        inputPeriodSelect.disabled = false;
+        inputPeriodSelect.value = '1';
+        this.setPeriod();
         this.budget = 0;
         this.income = {};
         this.incomeMonth = 0;
@@ -316,6 +319,7 @@ inputSalaryAmount.addEventListener('input', () => {
             buttonPlusExpense.disabled = true;
             buttonPlusIncome.disabled = true;
             buttonCansel.addEventListener('click', hardBindReset);
+            inputPeriodSelect.disabled = true;
         });
     } else {
         inputSalaryAmount.value = inputSalaryAmount.value.replace(/[^\d]/g, '');
@@ -355,10 +359,4 @@ expensesItems.forEach(item => item.querySelector('.expenses-title').addEventList
 // inputExpensesTitle.forEach((item) => item.addEventListener('input', () => {
 //     item.value = item.value.replace(/[^а-я А-Я \W]/g, '');
 // }));
-
-
-
-
-
-
 // appData.purposeAchieved();
