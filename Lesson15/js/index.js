@@ -56,7 +56,6 @@ class AppData {
             this.showResult();
         };
     };
-<<<<<<< HEAD
     addExpensesBlock() {
         const cloneExpensesItem = expensesItems[0].cloneNode(true);
         cloneExpensesItem.childNodes.forEach((item) => {
@@ -97,25 +96,11 @@ class AppData {
             const cashExpenses = item.querySelector('.expenses-amount').value;
             if (itemExpenses !== '' && cashExpenses !== '') {
                 this.expenses[itemExpenses] = +cashExpenses;
-=======
-    addInExBlock(elem) {
-        const render = (elem) => {
-            const stringStart = elem.className.split('-')[0];
-            const items = document.querySelectorAll(`.${stringStart}-items`);
-            items.forEach(item => item.querySelector(`.${stringStart}-amount`).addEventListener('input', (e) => {
-                e.target.value = e.target.value.replace(/[^\d]/g, '');
-            }));
-            items.forEach(item => item.querySelector(`.${stringStart}-title`).addEventListener('input', (e) => {
-                e.target.value = e.target.value.replace(/[^а-я А-Я a-z A-Z \W]/g, '');
-            }));
-            if (items.length === 3 && stringStart === 'expenses') {
-                buttonPlusExpense.style.display = 'none';
->>>>>>> lesson_16
             };
             if (items.length === 3 && stringStart === 'income') {
                 buttonPlusIncome.style.display = 'none';
             };
-        };
+        });
         if (elem.parentNode.className === 'income') {
             const cloneIncomeItem = inputIncomeItems[0].cloneNode(true);
             cloneIncomeItem.childNodes.forEach((item) => {
