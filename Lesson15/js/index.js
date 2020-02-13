@@ -69,7 +69,7 @@ class AppData {
             e.target.value = e.target.value.replace(/[^\d]/g, '');
         }));
         expensesItems.forEach(item => item.querySelector('.expenses-title').addEventListener('input', (e) => {
-            e.target.value = e.target.value.replace(/[^а-я А-Я \W]/g, '');
+            e.target.value = e.target.value.replace(/[^а-я А-Я a-z A-Z \W]/g, '');
         }));
         if (expensesItems.length === 3) {
             buttonPlusExpense.style.display = 'none';
@@ -296,22 +296,22 @@ class AppData {
             inputTargetAmount.value = inputTargetAmount.value.replace(/[^\d]/g, '');
         });
         inputAdditionalExpenseAmount.addEventListener('input', () => {
-            inputAdditionalExpenseAmount.value = inputAdditionalExpenseAmount.value.replace(/[^а-я А-Я \W]/g, '');
+            inputAdditionalExpenseAmount.value = inputAdditionalExpenseAmount.value.replace(/[^а-я А-Я a-z A-Z \W]/g, '');
         });
         inputAdditionalIncomeItems.forEach((item) => item.addEventListener('input', () => {
-            item.value = item.value.replace(/[^а-я А-Я \W]/g, '');
+            item.value = item.value.replace(/[^а-я А-Я a-z A-Z \W]/g, '');
         }));
         inputIncomeItems.forEach(item => item.querySelector('.income-amount').addEventListener('input', (e) => {
             e.target.value = e.target.value.replace(/[^\d]/g, '');
         }));
         inputIncomeItems.forEach(item => item.querySelector('.income-title').addEventListener('input', (e) => {
-            e.target.value = e.target.value.replace(/[^а-я А-Я \W]/g, '');
+            e.target.value = e.target.value.replace(/[^а-я А-Я a-z A-Z \W]/g, '');
         }));
         expensesItems.forEach(item => item.querySelector('.expenses-amount').addEventListener('input', (e) => {
             e.target.value = e.target.value.replace(/[^\d]/g, '');
         }));
         expensesItems.forEach(item => item.querySelector('.expenses-title').addEventListener('input', (e) => {
-            e.target.value = e.target.value.replace(/[^а-я А-Я \W]/g, '');
+            e.target.value = e.target.value.replace(/[^а-я А-Я a-z A-Z \W]/g, '');
         }));
     };
 
