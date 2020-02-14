@@ -2,6 +2,16 @@
 const isNumber = function(n) {
     return !isNaN(parseFloat(n)) && isFinite(n);
 };
+const regDigits = /[^\d]/g;
+const regLetters = /[^а-я А-Я a-z A-Z \W]/g;
+const setCookie = function(key, value, year, month, day) {
+    let cookieString = `${encodeURI(key)}=${encodeURI(value)}`;
+    if (year) {
+        const expires = new Date(year, month, day);
+        cookieString += `;expires=${expires.toUTCString()}`;
+    }
+    document.cookie = cookieString;
+};
 
 const buttonCalc = document.getElementById('start'),
     buttonPlusIncome = document.getElementsByTagName('button')[0],
@@ -30,6 +40,42 @@ let inputIncomeItems = document.querySelectorAll('.income-items'),
     expensesItems = document.querySelectorAll('.expenses-items'),
     inputExpensesTitle = document.querySelectorAll('.expenses-title'),
     inputExpensesAmount = document.querySelectorAll('.expenses-amount');
+// Переименование классов для удобной работы с local и cookie
+inputAdditionalIncomeItems.forEach((item, index) => item.className += index);
+
+const memory = new Map;
+const addEveryWhere = function(elem) {
+    if (elem.className) {
+        memory[elem.className] = elem.value;
+        memory.set(elem.className, elem.value);
+    } else {
+        memory[elem.id] = elem.value;
+        memory.set(elem.id, elem.value);
+    };
+    console.log(memory);
+    localStorage.setItem('memory', JSON.stringify(memory));
+    memory.forEach((val, key) => {
+        setCookie(key, val, 2021, 1, 1);
+    });
+};
+const removeFromEveryWhere = function(elem) {
+    memory.delete(elem.className);
+    delete memory[elem.className];
+    localStorage.setItem('memory', JSON.stringify(memory));
+    console.log(memory);
+    memory.forEach((val, key) => {
+        setCookie(key, val, 2018, 1, 1);
+    });
+}
+localStorage.removeItem('memory');
+const removeAllCookie = function() {
+    memory.forEach((key, val) => setCookie(encodeURIComponent(key), encodeURIComponent(val), 2019));
+}
+
+
+// memory = JSON.parse(localStorage.getItem("memory"));
+// console.log(memory);
+
 
 
 class AppData {
@@ -63,11 +109,21 @@ class AppData {
         const render = (elem) => {
             const stringStart = elem.className.split('-')[0];
             const items = document.querySelectorAll(`.${stringStart}-items`);
-            items.forEach(item => item.querySelector(`.${stringStart}-amount`).addEventListener('input', (e) => {
-                e.target.value = e.target.value.replace(/[^\d]/g, '');
+            items.forEach((item, index) => item.querySelector(`.${stringStart}-amount`).addEventListener('input', (e) => {
+                const arr = [...e.target.classList];
+                if (!arr.includes('' + index)) {
+                    e.target.className += ' ' + index;
+                };
+                e.target.value = e.target.value.replace(regDigits, '');
+                addEveryWhere(e.target);
             }));
-            items.forEach(item => item.querySelector(`.${stringStart}-title`).addEventListener('input', (e) => {
-                e.target.value = e.target.value.replace(/[^а-я А-Я a-z A-Z \W]/g, '');
+            items.forEach((item, index) => item.querySelector(`.${stringStart}-title`).addEventListener('input', (e) => {
+                const arr = [...e.target.classList];
+                if (!arr.includes('' + index)) {
+                    e.target.className += ' ' + index;
+                };
+                e.target.value = e.target.value.replace(regLetters, '');
+                addEveryWhere(e.target);
             }));
             if (items.length === 3 && stringStart === 'expenses') {
                 buttonPlusExpense.style.display = 'none';
@@ -80,6 +136,7 @@ class AppData {
             const cloneIncomeItem = inputIncomeItems[0].cloneNode(true);
             cloneIncomeItem.childNodes.forEach((item) => {
                 item.value = '';
+                if (item.className) item.className.replace(/\d|\s/, '');
             });
             inputIncomeItems[0].parentNode.insertBefore(cloneIncomeItem, buttonPlusIncome);
             render(cloneIncomeItem);
@@ -87,6 +144,7 @@ class AppData {
             const cloneExpensesItem = expensesItems[0].cloneNode(true);
             cloneExpensesItem.childNodes.forEach((item) => {
                 item.value = '';
+                if (item.className) item.className.replace(/\d|\s/, '');
             });
             expensesItems[0].parentNode.insertBefore(cloneExpensesItem, buttonPlusExpense);
             render(cloneExpensesItem);
@@ -111,13 +169,12 @@ class AppData {
     };
     getAddIncExp() {
         const render = (item) => {
-            if (item.className === 'additional_income-item') {
+            if (item.className === 'additional_income-item0' | item.className === 'additional_income-item1') {
                 item = item.value.trim();
                 if (item !== '') {
                     this.addExpenses.push(item);
                 };
             } else {
-                console.log(item);
                 item = item.trim();
                 if (item !== '') {
                     this.addIncome.push(item);
@@ -159,6 +216,7 @@ class AppData {
     };
     setPeriod() {
         periodAmount.innerHTML = inputPeriodSelect.value;
+        addEveryWhere(inputPeriodSelect);
     };
     calcSaveMoney() {
         return this.budgetMonth * inputPeriodSelect.value;
@@ -231,9 +289,11 @@ class AppData {
     };
     changePercent() {
         const valueSelect = this.value;
+        addEveryWhere(selectBank);
         const replacement = function() {
-            inputDepositPercent.value = inputDepositPercent.value.replace(/[^\d]/g, '');
+            inputDepositPercent.value = inputDepositPercent.value.replace(regDigits, '');
             inputDepositPercent.value = inputDepositPercent.value.replace(/\d{3,}|00|^0/g, '');
+            addEveryWhere(inputDepositPercent);
         };
         if (valueSelect !== 'other') {
             inputDepositPercent.value = valueSelect;
@@ -245,17 +305,28 @@ class AppData {
     };
     depositHandler() {
         if (checkboxDeposit.checked) {
+            checkboxDeposit.value = 'on';
+            addEveryWhere(checkboxDeposit);
             selectBank.style.display = 'inline-block';
             inputDepositAmount.style.display = 'inline-block';
+            inputDepositAmount.addEventListener('input', () => {
+                inputDepositAmount.value = inputDepositAmount.value.replace(regDigits, '');
+                addEveryWhere(inputDepositAmount);
+            })
             this.deposit = true;
             selectBank.addEventListener('change', this.changePercent);
         } else {
+            checkboxDeposit.value = 'off';
+            addEveryWhere(checkboxDeposit);
             selectBank.style.display = 'none';
             inputDepositAmount.style.display = 'none';
             inputDepositPercent.style.display = 'none';
             selectBank.value = "";
             inputDepositAmount.value = "";
             this.deposit = false;
+            removeFromEveryWhere(inputDepositAmount);
+            removeFromEveryWhere(selectBank);
+            removeFromEveryWhere(inputDepositPercent);
             selectBank.removeEventListener('change', this.changePercent)
         };
     };
@@ -269,11 +340,13 @@ class AppData {
         const inputListen = function() {
             if (inputSalaryAmount.value.trim() !== '' && isNumber(inputSalaryAmount.value.trim())) {
                 buttonCalc.disabled = false;
+                addEveryWhere(inputSalaryAmount);
                 buttonCalc.addEventListener('click', _this.start.bind(_this));
                 buttonCalc.addEventListener('click', buttonCalcListen);
             } else {
-                inputSalaryAmount.value = inputSalaryAmount.value.replace(/[^\d]/g, '');
+                inputSalaryAmount.value = inputSalaryAmount.value.replace(regDigits, '');
                 buttonCalc.disabled = true;
+                addEveryWhere(inputSalaryAmount);
             }
         };
         const buttonCalcListen = function() {
@@ -304,26 +377,59 @@ class AppData {
         };
         inputSalaryAmount.addEventListener('input', inputListen);
         inputTargetAmount.addEventListener('input', () => {
-            inputTargetAmount.value = inputTargetAmount.value.replace(/[^\d]/g, '');
+            inputTargetAmount.value = inputTargetAmount.value.replace(regDigits, '');
+            addEveryWhere(inputTargetAmount);
         });
         inputAdditionalExpenseAmount.addEventListener('input', () => {
-            inputAdditionalExpenseAmount.value = inputAdditionalExpenseAmount.value.replace(/[^а-я А-Я a-z A-Z \W]/g, '');
+            inputAdditionalExpenseAmount.value = inputAdditionalExpenseAmount.value.replace(regLetters, '');
+            addEveryWhere(inputAdditionalExpenseAmount);
         });
-        inputAdditionalIncomeItems.forEach((item) => item.addEventListener('input', () => {
-            item.value = item.value.replace(/[^а-я А-Я a-z A-Z \W]/g, '');
-        }));
-        inputIncomeItems.forEach(item => item.querySelector('.income-amount').addEventListener('input', (e) => {
-            e.target.value = e.target.value.replace(/[^\d]/g, '');
-        }));
-        inputIncomeItems.forEach(item => item.querySelector('.income-title').addEventListener('input', (e) => {
-            e.target.value = e.target.value.replace(/[^а-я А-Я a-z A-Z \W]/g, '');
-        }));
-        expensesItems.forEach(item => item.querySelector('.expenses-amount').addEventListener('input', (e) => {
-            e.target.value = e.target.value.replace(/[^\d]/g, '');
-        }));
-        expensesItems.forEach(item => item.querySelector('.expenses-title').addEventListener('input', (e) => {
-            e.target.value = e.target.value.replace(/[^а-я А-Я a-z A-Z \W]/g, '');
-        }));
+        inputAdditionalIncomeItems.forEach((item) => {
+            item.addEventListener('input', () => {
+                item.value = item.value.replace(regLetters, '');
+                addEveryWhere(item);
+            })
+        });
+        inputIncomeItems.forEach((item, index) => {
+            item.querySelector('.income-amount').addEventListener('input', (e) => {
+                const arr = [...e.target.classList];
+                if (!arr.includes('' + index)) {
+                    e.target.className += ' ' + index;
+                };
+                e.target.value = e.target.value.replace(regDigits, '');
+                addEveryWhere(e.target);
+            })
+        });
+        inputIncomeItems.forEach((item, index) => {
+            item.querySelector('.income-title').addEventListener('input', (e) => {
+                const arr = [...e.target.classList];
+                if (!arr.includes('' + index)) {
+                    e.target.className += ' ' + index;
+                };
+                e.target.value = e.target.value.replace(regLetters, '');
+                addEveryWhere(e.target);
+            })
+        });
+        expensesItems.forEach((item, index) => {
+            item.querySelector('.expenses-amount').addEventListener('input', (e) => {
+                const arr = [...e.target.classList];
+                if (!arr.includes('' + index)) {
+                    e.target.className += ' ' + index;
+                };
+                e.target.value = e.target.value.replace(regDigits, '');
+                addEveryWhere(e.target);
+            })
+        });
+        expensesItems.forEach((item, index) => {
+            item.querySelector('.expenses-title').addEventListener('input', (e) => {
+                const arr = [...e.target.classList];
+                if (!arr.includes('' + index)) {
+                    e.target.className += ' ' + index;
+                };
+                e.target.value = e.target.value.replace(regLetters, '');
+                addEveryWhere(e.target);
+            })
+        });
         checkboxDeposit.addEventListener('change', this.depositHandler.bind(this));
     };
 
