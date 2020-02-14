@@ -99,29 +99,7 @@ class AppData {
             if (itemExpenses !== '' && cashExpenses !== '') {
                 this.expenses[itemExpenses] = +cashExpenses;
             };
-<<<<<<< HEAD
-            if (items.length === 3 && stringStart === 'income') {
-                buttonPlusIncome.style.display = 'none';
-            };
         });
-        if (elem.parentNode.className === 'income') {
-            const cloneIncomeItem = inputIncomeItems[0].cloneNode(true);
-            cloneIncomeItem.childNodes.forEach((item) => {
-                item.value = '';
-            });
-            inputIncomeItems[0].parentNode.insertBefore(cloneIncomeItem, buttonPlusIncome);
-            render(cloneIncomeItem);
-        } else {
-            const cloneExpensesItem = expensesItems[0].cloneNode(true);
-            cloneExpensesItem.childNodes.forEach((item) => {
-                item.value = '';
-            });
-            expensesItems[0].parentNode.insertBefore(cloneExpensesItem, buttonPlusExpense);
-            render(cloneExpensesItem);
-        }
-=======
-        });
->>>>>>> lesson_15_main
     };
 
     getIncome() {
