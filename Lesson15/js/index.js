@@ -48,9 +48,9 @@ class AppData {
     start() {
         if (buttonCalc.style.display !== 'none') {
             this.budget = +inputSalaryAmount.value;
-            this.getInExp();
             this.getInfoDeposit();
             this.getAddIncExp();
+            this.getInExp();
             this.getExpensesMonth();
             this.getBudget();
             this.showResult();
