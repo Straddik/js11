@@ -48,10 +48,12 @@ class AppData {
     start() {
         if (buttonCalc.style.display !== 'none') {
             this.budget = +inputSalaryAmount.value;
-            this.getInExp();
+            this.getExpenses();
             this.getInfoDeposit();
-            this.getAddIncExp();
             this.getExpensesMonth();
+            this.getAddExpenses();
+            this.getAddIncome();
+            this.getIncome();
             this.getBudget();
             this.showResult();
         };
@@ -97,6 +99,7 @@ class AppData {
             if (itemExpenses !== '' && cashExpenses !== '') {
                 this.expenses[itemExpenses] = +cashExpenses;
             };
+<<<<<<< HEAD
             if (items.length === 3 && stringStart === 'income') {
                 buttonPlusIncome.style.display = 'none';
             };
@@ -116,45 +119,39 @@ class AppData {
             expensesItems[0].parentNode.insertBefore(cloneExpensesItem, buttonPlusExpense);
             render(cloneExpensesItem);
         }
+=======
+        });
+>>>>>>> lesson_15_main
     };
-    getInExp() {
-        const render = (item) => {
-            const startStr = item.className.split('-')[0];
-            const title = item.querySelector(`.${startStr}-title`).value;
-            const amount = item.querySelector(`.${startStr}-amount`).value;
-            if (title !== '' && amount !== '') {
-                this[startStr][title] = +amount;
+
+    getIncome() {
+        inputIncomeItems.forEach((item) => {
+            const itemIncome = item.querySelector('.income-title').value;
+            const cashIncome = item.querySelector('.income-amount').value;
+            if (itemIncome !== '' && cashIncome !== '') {
+                this.income[itemIncome] = +cashIncome;
             }
-        }
-        inputIncomeItems = document.querySelectorAll('.income-items');
-        expensesItems = document.querySelectorAll('.expenses-items');
-        inputIncomeItems.forEach(render);
-        expensesItems.forEach(render);
+        })
         for (let key in this.income) {
             this.incomeMonth += +this.income[key];
-        };
+        }
     };
-    getAddIncExp() {
-        const render = (item) => {
-            if (item.className === 'additional_income-item') {
-                item = item.value.trim();
-                if (item !== '') {
-                    this.addExpenses.push(item);
-                };
-            } else {
-                console.log(item);
-                item = item.trim();
-                if (item !== '') {
-                    this.addIncome.push(item);
-                }
-            };
-
-        };
+    getAddExpenses() {
         const addExpenses = inputAdditionalExpenseAmount.value.split(',');
-        console.log(addExpenses);
-        addExpenses.forEach(render);
-        inputAdditionalIncomeItems.forEach(render);
-
+        addExpenses.forEach((item) => {
+            item = item.trim();
+            if (item !== '') {
+                this.addExpenses.push(item);
+            }
+        })
+    };
+    getAddIncome = function() {
+        inputAdditionalIncomeItems.forEach((item) => {
+            const itemValue = item.value.trim();
+            if (itemValue !== '') {
+                this.addIncome.push(itemValue);
+            }
+        })
     };
     showResult() {
         const _this = this;
@@ -261,8 +258,8 @@ class AppData {
         const _this = this;
         buttonCansel.disabled = true;
         buttonCalc.disabled = true;
-        buttonPlusExpense.addEventListener('click', (e) => _this.addInExBlock(e.target));
-        buttonPlusIncome.addEventListener('click', (e) => _this.addInExBlock(e.target));
+        buttonPlusExpense.addEventListener('click', _this.addExpensesBlock);
+        buttonPlusIncome.addEventListener('click', _this.addIncomeBlock);
         inputPeriodSelect.addEventListener('input', _this.setPeriod);
         const inputListen = function() {
             if (inputSalaryAmount.value.trim() !== '' && isNumber(inputSalaryAmount.value.trim())) {
