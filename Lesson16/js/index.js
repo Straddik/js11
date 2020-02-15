@@ -53,7 +53,7 @@ const addEveryWhere = function(elem) {
         memory.set(elem.id, elem.value);
     };
     console.log(memory);
-    localStorage.setItem('memory', JSON.stringify(memory));
+    localStorage.setItem('memory', JSON.stringify(...memory));
     memory.forEach((val, key) => {
         setCookie(key, val, 2021, 1, 1);
     });
@@ -63,10 +63,8 @@ const removeFromEveryWhere = function(elem) {
     delete memory[elem.className];
     localStorage.setItem('memory', JSON.stringify(memory));
     console.log(memory);
-    memory.forEach((val, key) => {
-        setCookie(key, val, 2018, 1, 1);
-    });
-}
+    setCookie(elem.className, memory.get(elem.className), 2018, 1, 1);
+};
 localStorage.removeItem('memory');
 const removeAllCookie = function() {
     memory.forEach((key, val) => setCookie(encodeURIComponent(key), encodeURIComponent(val), 2019));
@@ -127,9 +125,13 @@ class AppData {
             }));
             if (items.length === 3 && stringStart === 'expenses') {
                 buttonPlusExpense.style.display = 'none';
+                buttonPlusExpense.value = 'false';
+                addEveryWhere(buttonPlusExpense);
             };
             if (items.length === 3 && stringStart === 'income') {
                 buttonPlusIncome.style.display = 'none';
+                buttonPlusIncome.value = 'false';
+                addEveryWhere(buttonPlusIncome);
             };
         };
         if (elem.parentNode.className === 'income') {
@@ -330,10 +332,37 @@ class AppData {
             selectBank.removeEventListener('change', this.changePercent)
         };
     };
+    checkingStoragesAtStart() {
+        if (document.cookie) {
+            let cash = document.cookie.split('; ');
+            cash = cash.map((val) => {
+                val = val.split('=');
+                val = val.map((item) => {
+                    item = decodeURI(item);
+                    return item;
+                });
+                memory.set(val[0], val[1]);
+                return val;
+            });
+        };
+        if (localStorage.memory) {
+
+            JSON.parse(localStorage.getItem("memory")).forEach(val => memory[val[0]] = val[1]);
+            console.log(memory);
+        };
+
+    };
+    buildingFormsAtStart() {
+
+    };
     eventsListeners() {
         const _this = this;
         buttonCansel.disabled = true;
         buttonCalc.disabled = true;
+        buttonPlusExpense.value = 'true';
+        buttonPlusIncome.value = 'true';
+        addEveryWhere(buttonPlusIncome);
+        addEveryWhere(buttonPlusExpense);
         buttonPlusExpense.addEventListener('click', (e) => _this.addInExBlock(e.target));
         buttonPlusIncome.addEventListener('click', (e) => _this.addInExBlock(e.target));
         inputPeriodSelect.addEventListener('input', _this.setPeriod);
