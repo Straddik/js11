@@ -43,7 +43,7 @@ let inputIncomeItems = document.querySelectorAll('.income-items'),
 // Переименование классов для удобной работы с local и cookie
 inputAdditionalIncomeItems.forEach((item, index) => item.className += index);
 
-const memory = new Map;
+const memory = new Map();
 const addEveryWhere = function(elem) {
     if (elem.className) {
         memory[elem.className] = elem.value;
@@ -52,8 +52,7 @@ const addEveryWhere = function(elem) {
         memory[elem.id] = elem.value;
         memory.set(elem.id, elem.value);
     };
-    console.log(memory);
-    localStorage.setItem('memory', JSON.stringify(...memory));
+    localStorage.setItem('memory', JSON.stringify(memory));
     memory.forEach((val, key) => {
         setCookie(key, val, 2021, 1, 1);
     });
@@ -62,17 +61,18 @@ const removeFromEveryWhere = function(elem) {
     memory.delete(elem.className);
     delete memory[elem.className];
     localStorage.setItem('memory', JSON.stringify(memory));
-    console.log(memory);
     setCookie(elem.className, memory.get(elem.className), 2018, 1, 1);
 };
-localStorage.removeItem('memory');
-const removeAllCookie = function() {
-    memory.forEach((key, val) => setCookie(encodeURIComponent(key), encodeURIComponent(val), 2019));
+// 
+const removeAllCookieAndStorage = function() {
+    memory.forEach((val, key) => setCookie(key, val, 2019, 1, 1));
+    localStorage.removeItem('memory');
+    memory.clear();
+    for (let k in memory) {
+        delete memory[k];
+    }
 }
 
-
-// memory = JSON.parse(localStorage.getItem("memory"));
-// console.log(memory);
 
 
 
@@ -273,15 +273,15 @@ class AppData {
         if (expensesItems[2]) expensesItems[2].remove();
         inputPeriodSelect.disabled = false;
         inputPeriodSelect.value = '1';
-        this.setPeriod();
-        checkboxDeposit.checked = false;
+        periodAmount.innerHTML = inputPeriodSelect.value;
         checkboxDeposit.disabled = false;
+        checkboxDeposit.checked = false;
         inputDepositAmount.disabled = false;
         inputDepositPercent.disabled = false;
         selectBank.disabled = false;
         this.depositHandler();
         Object.assign(this, this.constructor);
-
+        removeAllCookieAndStorage();
     };
     getInfoDeposit() {
         if (this.deposit) {
@@ -302,6 +302,7 @@ class AppData {
             inputDepositPercent.style.display = 'none';
         } else {
             inputDepositPercent.style.display = 'inline-block';
+            addEveryWhere(inputDepositPercent);
             inputDepositPercent.addEventListener('input', replacement);
         }
     };
@@ -346,16 +347,96 @@ class AppData {
             });
         };
         if (localStorage.memory) {
-
-            JSON.parse(localStorage.getItem("memory")).forEach(val => memory[val[0]] = val[1]);
-            console.log(memory);
+            const cash = JSON.parse(localStorage.getItem("memory"));
+            for (let key in cash) {
+                memory[key] = cash[key];
+            };
         };
 
     };
-    buildingFormsAtStart() {
+    checkingStoragesEveryMoment() {
+        if (document.cookie && localStorage.memory) {
+            let cash2 = JSON.parse(localStorage.getItem("memory"));
+            for (let key in cash2) {
+                let cash1 = document.cookie.split('; ');
+                let cash3 = false;
+                for (let i = 0; i < cash1.length; i++) {
+                    cash1[i] = cash1[i].split('=').map((item) => {
+                        item = decodeURI(item);
+                        return item;
+                    });
+                    if (cash1[i][0] === key && cash1[i][1] === cash2[key]) {
+                        cash3 = true;
+                        break;
+                    };
+                };
+                if (!cash3) {
+                    this.reset();
+                    break;
+                }
+            };
+        } else if (!document.cookie && localStorage.memory) {
+            this.reset();
 
+        };
+    };
+    buildingFormsAtStart() {
+        memory.forEach((val, key) => {
+            let block = 0;
+            let cash = key.split(' ').filter(item => item !== "btn_plus" &&
+                item !== "0" && item !== "1" && item !== "2").join();
+            if (cash) {
+                if (cash === "start" || cash === "cansel" || cash === "deposit-check") {
+                    block = document.querySelector("#" + cash);
+                    if (cash === "deposit-check" && val == 'on') {
+                        block.checked = true;
+                        this.depositHandler();
+                    } else {
+                        block.value = val;
+                    };
+                } else if (cash === 'income-title' || cash === 'expenses-title') {
+                    if (key.match(/(?=\d)[^1 2]/)) {
+                        block = document.querySelectorAll("." + cash)[1];
+                        block.value = val;
+                    } else if (key.match(/1/)) {
+                        block = document.querySelectorAll("." + cash)[1];
+                        this.addInExBlock(block.parentNode);
+                        block = document.querySelectorAll("." + cash)[2];
+                        block.value = val;
+                    } else if (key.match(/2/)) {
+                        block = document.querySelectorAll("." + cash)[2];
+                        this.addInExBlock(block.parentNode);
+                        block = document.querySelectorAll("." + cash)[3];
+                        block.value = val;
+                    }
+                } else if (cash === 'income-amount' || cash === 'expenses-amount') {
+                    if (key.match(/(?=\d)[^1 2]/)) {
+                        block = document.querySelectorAll("." + cash)[0];
+                        console.log(block);
+                        block.value = val;
+                    } else if (key.match(/1/)) {
+                        block = document.querySelectorAll("." + cash)[1];
+                        console.log(block);
+                        block.value = val;
+                    } else if (key.match(/2/)) {
+                        block = document.querySelectorAll("." + cash)[2];
+                        block.value = val;
+                    }
+                } else if (cash === 'deposit-bank' && val === 'other') {
+                    block = document.querySelector("." + cash);
+                    block.value = val;
+                    inputDepositPercent.style.display = 'inline-block';
+                } else {
+                    block = document.querySelector("." + cash);
+                    block.value = val;
+                };
+            };
+        });
+        this.setPeriod();
     };
     eventsListeners() {
+        this.checkingStoragesAtStart();
+        setInterval(this.checkingStoragesEveryMoment, 1000);
         const _this = this;
         buttonCansel.disabled = true;
         buttonCalc.disabled = true;
@@ -460,6 +541,7 @@ class AppData {
             })
         });
         checkboxDeposit.addEventListener('change', this.depositHandler.bind(this));
+        this.buildingFormsAtStart();
     };
 
 };
