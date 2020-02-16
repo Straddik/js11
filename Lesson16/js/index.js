@@ -21,13 +21,14 @@ const buttonCalc = document.getElementById('start'),
     selectBank = document.querySelector('.deposit-bank'),
     inputDepositAmount = document.querySelector('.deposit-amount'),
     inputDepositPercent = document.querySelector('.deposit-percent'),
-    resultBudgetMonth = document.getElementsByClassName('result-total')[0],
-    resultBudgetDay = document.getElementsByClassName('result-total')[1],
-    resultExpensesMonth = document.getElementsByClassName('result-total')[2],
-    resultAdditionalIncome = document.getElementsByClassName('result-total')[3],
-    resultAdditionalExpenses = document.getElementsByClassName('result-total')[4],
-    resultIncomePeriod = document.getElementsByClassName('result-total')[5],
-    resultTargetMonth = document.getElementsByClassName('result-total')[6],
+    result = document.querySelectorAll('.result-total'),
+    resultBudgetMonth = result[0],
+    resultBudgetDay = result[1],
+    resultExpensesMonth = result[2],
+    resultAdditionalIncome = result[4],
+    resultAdditionalExpenses = result[3],
+    resultIncomePeriod = result[5],
+    resultTargetMonth = result[6],
     inputSalaryAmount = document.querySelector('.salary-amount'),
     inputAdditionalIncomeItems = document.querySelectorAll('.additional_income-item'),
     inputAdditionalExpenseAmount = document.querySelector('.additional_expenses-item'),
@@ -42,6 +43,7 @@ let inputIncomeItems = document.querySelectorAll('.income-items'),
     inputExpensesAmount = document.querySelectorAll('.expenses-amount');
 // Переименование классов для удобной работы с local и cookie
 inputAdditionalIncomeItems.forEach((item, index) => item.className += index);
+console.log(result);
 
 const memory = new Map();
 const addEveryWhere = function(elem) {
@@ -453,7 +455,6 @@ class AppData {
                     inputSalaryAmount.dispatchEvent(inputSalaryChange);
                 } else {
                     block = document.querySelector("." + cash);
-                    console.log(cash);
                     block.value = val;
                 };
             };
