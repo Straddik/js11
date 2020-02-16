@@ -126,12 +126,10 @@ class AppData {
             if (items.length === 3 && stringStart === 'expenses') {
                 buttonPlusExpense.style.display = 'none';
                 buttonPlusExpense.value = 'false';
-                addEveryWhere(buttonPlusExpense);
             };
             if (items.length === 3 && stringStart === 'income') {
                 buttonPlusIncome.style.display = 'none';
                 buttonPlusIncome.value = 'false';
-                addEveryWhere(buttonPlusIncome);
             };
         };
         if (elem.parentNode.className === 'income') {
@@ -192,15 +190,23 @@ class AppData {
     showResult() {
         const _this = this;
         resultBudgetMonth.value = this.budgetMonth;
+        addEveryWhere(resultBudgetMonth);
         resultBudgetDay.value = this.budgetDay;
+        addEveryWhere(resultBudgetDay);
         resultExpensesMonth.value = this.expensesMonth;
+        addEveryWhere(resultExpensesMonth);
         resultAdditionalExpenses.value = this.addExpenses.join(', ');
+        addEveryWhere(resultAdditionalExpenses);
         resultAdditionalIncome.value = this.addIncome.join(', ');
+        addEveryWhere(resultAdditionalIncome);
         resultTargetMonth.value = this.getTargetMonth();
-        inputPeriodSelect.addEventListener('input', () => {
-            resultIncomePeriod.value = _this.calcSaveMoney();
-        });
+        addEveryWhere(resultTargetMonth);
+        // inputPeriodSelect.addEventListener('input', () => {
+        //     resultIncomePeriod.value = _this.calcSaveMoney();
+        //     addEveryWhere(resultIncomePeriod);
+        // });
         resultIncomePeriod.value = this.calcSaveMoney();
+        addEveryWhere(resultIncomePeriod);
 
     };
     getExpensesMonth() {
@@ -254,6 +260,8 @@ class AppData {
         buttonCalc.style.display = 'block';
         buttonCansel.disabled = true;
         buttonCalc.disabled = true;
+        buttonCalc.value = true;
+        addEveryWhere(buttonCalc);
         buttonPlusExpense.disabled = false;
         buttonPlusIncome.disabled = false;
         buttonPlusExpense.style.display = 'block';
@@ -280,8 +288,14 @@ class AppData {
         inputDepositPercent.disabled = false;
         selectBank.disabled = false;
         this.depositHandler();
-        Object.assign(this, this.constructor);
+        let elem = {
+            className: "isLoad",
+            value: "false"
+        };
+        addEveryWhere(elem);
+        Object.assign(this, new this.constructor);
         removeAllCookieAndStorage();
+
     };
     getInfoDeposit() {
         if (this.deposit) {
@@ -371,29 +385,36 @@ class AppData {
                     };
                 };
                 if (!cash3) {
-                    this.reset();
+                    console.log(key, cash2[key]);
+                    AppData.prototype.reset();
                     break;
                 }
             };
         } else if (!document.cookie && localStorage.memory) {
-            this.reset();
+            AppData.prototype.reset();
 
         };
     };
     buildingFormsAtStart() {
         memory.forEach((val, key) => {
             let block = 0;
-            let cash = key.split(' ').filter(item => item !== "btn_plus" &&
+            let cash = key.split(' ').filter(item => item !== "btn_plus" && item !== "result-total" &&
                 item !== "0" && item !== "1" && item !== "2").join();
             if (cash) {
-                if (cash === "start" || cash === "cansel" || cash === "deposit-check") {
+                if (cash === "start" || cash === "deposit-check") {
                     block = document.querySelector("#" + cash);
                     if (cash === "deposit-check" && val == 'on') {
                         block.checked = true;
                         this.depositHandler();
+                        block.value = val;
                     } else {
                         block.value = val;
                     };
+                } else if (cash === 'isLoad' && val === 'true') {
+                    const clickButtonCalc = new Event("click", { 'detail': buttonCalc, bubbles: true });
+                    buttonCalc.dispatchEvent(clickButtonCalc);
+                } else if (cash === 'isLoad' && val === 'false') {
+                    return;
                 } else if (cash === 'income-title' || cash === 'expenses-title') {
                     if (key.match(/(?=\d)[^1 2]/)) {
                         block = document.querySelectorAll("." + cash)[1];
@@ -412,7 +433,6 @@ class AppData {
                 } else if (cash === 'income-amount' || cash === 'expenses-amount') {
                     if (key.match(/(?=\d)[^1 2]/)) {
                         block = document.querySelectorAll("." + cash)[0];
-                        console.log(block);
                         block.value = val;
                     } else if (key.match(/1/)) {
                         block = document.querySelectorAll("." + cash)[1];
@@ -426,40 +446,55 @@ class AppData {
                     block = document.querySelector("." + cash);
                     block.value = val;
                     inputDepositPercent.style.display = 'inline-block';
+                } else if (cash === 'salary-amount' && val.trim()) {
+                    block = document.querySelector("." + cash);
+                    block.value = val;
+                    const inputSalaryChange = new Event("input", { 'detail': inputSalaryAmount, bubbles: true });
+                    inputSalaryAmount.dispatchEvent(inputSalaryChange);
                 } else {
                     block = document.querySelector("." + cash);
+                    console.log(cash);
                     block.value = val;
                 };
             };
         });
         this.setPeriod();
     };
+
     eventsListeners() {
         this.checkingStoragesAtStart();
-        setInterval(this.checkingStoragesEveryMoment, 1000);
         const _this = this;
+        setInterval(this.checkingStoragesEveryMoment, 5000);
         buttonCansel.disabled = true;
         buttonCalc.disabled = true;
+        buttonCalc.value = true;
+        addEveryWhere(buttonCalc);
         buttonPlusExpense.value = 'true';
         buttonPlusIncome.value = 'true';
-        addEveryWhere(buttonPlusIncome);
-        addEveryWhere(buttonPlusExpense);
         buttonPlusExpense.addEventListener('click', (e) => _this.addInExBlock(e.target));
         buttonPlusIncome.addEventListener('click', (e) => _this.addInExBlock(e.target));
         inputPeriodSelect.addEventListener('input', _this.setPeriod);
         const inputListen = function() {
             if (inputSalaryAmount.value.trim() !== '' && isNumber(inputSalaryAmount.value.trim())) {
                 buttonCalc.disabled = false;
+                buttonCalc.value = false;
+                addEveryWhere(buttonCalc);
                 addEveryWhere(inputSalaryAmount);
                 buttonCalc.addEventListener('click', _this.start.bind(_this));
                 buttonCalc.addEventListener('click', buttonCalcListen);
             } else {
                 inputSalaryAmount.value = inputSalaryAmount.value.replace(regDigits, '');
                 buttonCalc.disabled = true;
+                buttonCalc.value = true;
                 addEveryWhere(inputSalaryAmount);
             }
         };
         const buttonCalcListen = function() {
+            let elem = {
+                className: "isLoad",
+                value: "true"
+            };
+            addEveryWhere(elem);
             inputSalaryAmount.disabled = true;
             inputTargetAmount.disabled = true;
             inputAdditionalExpenseAmount.disabled = true;
@@ -475,6 +510,9 @@ class AppData {
             buttonCansel.style.display = 'block';
             buttonCansel.disabled = false;
             buttonCalc.style.display = 'none';
+            buttonCalc.disabled = true;
+            buttonCalc.value = false;
+            addEveryWhere(buttonCalc);
             buttonPlusExpense.disabled = true;
             buttonPlusIncome.disabled = true;
             checkboxDeposit.disabled = true;
