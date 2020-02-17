@@ -465,7 +465,7 @@ class AppData {
     eventsListeners() {
         this.checkingStoragesAtStart();
         const _this = this;
-        setInterval(this.checkingStoragesEveryMoment, 5000);
+        setInterval(this.checkingStoragesEveryMoment, 1000);
         buttonCansel.disabled = true;
         buttonCalc.disabled = true;
         buttonCalc.value = true;
