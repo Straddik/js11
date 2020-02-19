@@ -60,18 +60,19 @@ window.addEventListener('DOMContentLoaded', () => {
     const togglePopUp = () => {
         const popup = document.querySelector('.popup'),
             popupBtn = document.querySelectorAll('.popup-btn'),
-            popupClose = document.querySelector('.popup-close');
-        let step = -50,
+            popupClose = document.querySelector('.popup-close'),
+            popupMenu = popup.querySelector('.popup-content');
+        let step = -100,
             idRequest;
         const animation = () => {
             idRequest = requestAnimationFrame(animation);
-            step++;
-            // console.log(step);
-            // popup.style.transform = `translateY(100%)`;
-            popup.style.transform = `translateX(${step}%)`;
+            step += 2;
+            popupMenu.style.transform = `translateX(${step}%)`;
+            popupMenu.style.opacity = `.${step>-90 ? 100+step%100 : 0}`;
             if (step >= 0) {
                 cancelAnimationFrame(idRequest);
-                step = -50;
+                step = -100;
+                popupMenu.style.opacity = `1`;
                 return;
             };
         };
@@ -79,10 +80,6 @@ window.addEventListener('DOMContentLoaded', () => {
         popupBtn.forEach((element) => element.addEventListener('click', () => {
             popup.style.display = 'block';
             if (document.documentElement.clientWidth >= 768) {
-                popup.parentNode.insertAdjacentElement('afterbegin', popup);
-                popup.style.position = 'relative';
-                popup.parentNode.position = 'absolute';
-                popup.style.top = `${document.documentElement.scrollTop + document.documentElement.clientHeight/2 - getComputedStyle(popup.querySelector('.popup-content')).height.split('px')[0]/2 }px`;
                 animation();
             } else {
                 popup.style.top = `0px`;
