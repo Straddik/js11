@@ -40,8 +40,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
     // меню 
     const toggleMenu = () => {
-        const btnMenu = document.querySelector('.menu'),
-            menu = document.querySelector('menu'),
+        const menu = document.querySelector('menu'),
             main = document.querySelector('main'),
             buttonImg = document.querySelectorAll('img')[3];
         buttonImg.className = 'scrollDown';
