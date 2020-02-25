@@ -197,6 +197,16 @@ window.addEventListener('DOMContentLoaded', () => {
             calcDay = calcBlock.childNodes[7],
             totalValue = document.getElementById('total');
 
+        const animateTotal = (max, s) => {
+            const idRec = requestAnimationFrame(animateTotal.bind(null, max, s));
+            totalValue.textContent = +totalValue.textContent + s;
+            if (+totalValue.textContent >= max) {
+                totalValue.textContent = max;
+                cancelAnimationFrame(idRec);
+            };
+
+        };
+
         const countSum = () => {
             let total = 0,
                 countValue = 1,
@@ -214,7 +224,13 @@ window.addEventListener('DOMContentLoaded', () => {
             if (typeValue && squareValue) {
                 total = price * typeValue * squareValue * countValue * dayValue;
             };
-            totalValue.textContent = total;
+            if (total) {
+                totalValue.textContent = 0;
+                animateTotal(total, 0.03 * total);
+            } else {
+                totalValue.textContent = total;
+            };
+
         };
 
         calcBlock.addEventListener('change', (event) => {
