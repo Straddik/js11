@@ -255,7 +255,7 @@ window.addEventListener('DOMContentLoaded', () => {
                 // clearTimeout(idTime);
             }, 500);
         };
-
+        //Подключение обработчика событий  к каждой форме
         form.forEach(item => {
             item.addEventListener('submit', (event) => {
                 event.preventDefault();
@@ -285,6 +285,7 @@ window.addEventListener('DOMContentLoaded', () => {
                             statusMessage.style.opacity = '0';
                             requestAnimationFrame(messageAnimateOpacity.bind(null, statusMessage));
                             statusMessage.textContent = successMessage;
+                            //Очистка inputов
                             [...item.elements].forEach(it => it.value = '');
                         },
                         (error) => {
