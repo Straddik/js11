@@ -259,6 +259,7 @@ window.addEventListener('DOMContentLoaded', () => {
         form.forEach(item => {
             item.addEventListener('submit', (event) => {
                 event.preventDefault();
+                // Проверка валидации (связь с Валидатором по классу success)
                 if ([...item.elements].every(it => {
                         if (it.tagName.toLowerCase() === 'input') {
                             return it.classList.contains('success');
