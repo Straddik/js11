@@ -261,6 +261,7 @@ window.addEventListener('DOMContentLoaded', () => {
             let pattern = {
                 email: /^\w+@\w+\.\w{2,}$/,
                 phone: /^(?:\+7)|(?<!\+)8(\d){10}$/,
+                //Это лишнее раз есть запрет, но я пока оставила
                 name: /^[а-яА-Я\s]*$/,
                 message: /^[а-яА-Я\s]*$/,
             };
@@ -270,7 +271,7 @@ window.addEventListener('DOMContentLoaded', () => {
             } else { showError(input) };
             return rezult;
         };
-
+        //Показать ошибку
         const showError = (elem) => {
             elem.classList.remove('success');
             elem.classList.add('error');
@@ -280,6 +281,7 @@ window.addEventListener('DOMContentLoaded', () => {
             errorDiv.classList.add('validator-error');
             elem.insertAdjacentElement('afterend', errorDiv);
         };
+        //Показать правильность ввода
         const showSuccess = (elem) => {
             elem.classList.remove('error');
             elem.classList.add('success');
@@ -287,6 +289,7 @@ window.addEventListener('DOMContentLoaded', () => {
                 elem.nextElementSibling.remove();
             };
         };
+        //Применить стили 
         const applyStyle = () => {
             const style = document.createElement('style');
             style.textContent = `
@@ -314,9 +317,16 @@ window.addEventListener('DOMContentLoaded', () => {
             applyStyle();
             [...item.elements].forEach(it => {
                 if (it.tagName.toLowerCase() === 'input') {
+                    //Запретить ввод любых символов в поле "Ваше имя" и "Ваше сообщение", кроме Кириллицы и пробелов (задание 6)
+                    if (it.id.split('-')[1] === 'name' || it.id.split('-')[1] === 'message') {
+                        it.addEventListener('input', () => {
+                            it.value = it.value.replace(/[^а-яА-Я\s]/, '');
+                        });
+                    };
                     it.addEventListener('change', (e) => {
                         validateInput(it, it.id.split('-')[1]);
                     });
+
                 }
             });
         });
