@@ -91,18 +91,18 @@ class Validator {
     }
     setPattern() {
         if (!this.pattern.phone) {
-            this.pattern.phone = /^\+?[78]([-()]*\d){10}$/;
+            this.pattern.phone = /^(?:\+7)|(?<!\+)8(\d){10}$/;
         };
         if (!this.pattern.email) {
             this.pattern.email = /^\w+@\w+\.\w{2,}$/;
         };
         //Кастомный паттерн: Все русские буквы +  знаки препинания 
         if (!this.pattern.russian) {
-            this.pattern.russian = /^[а-яА-Я\W]*$/;
+            this.pattern.russian = /^[а-яА-Я\s]*$/;
         }
         //Кастомный паттерн: Всё кроме латиницы, цифр и пробела
         if (!this.pattern.name) {
-            this.pattern.name = /^[^A-Za-z0-9\s]*$/;
+            this.pattern.name = /^[а-яА-Я\s]*$/;
         }
     };
 }

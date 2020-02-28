@@ -212,7 +212,7 @@ window.addEventListener('DOMContentLoaded', () => {
                 dayValue *= 1.5;
             }
             if (typeValue && squareValue) {
-                total = price * typeValue * squareValue * countValue * dayValue;
+                total = Math.floor(price * typeValue * squareValue * countValue * dayValue);
             };
             totalValue.textContent = total;
         };
@@ -255,6 +255,71 @@ window.addEventListener('DOMContentLoaded', () => {
                 // clearTimeout(idTime);
             }, 500);
         };
+
+        //Проверка на валидацию
+        const validateInput = (input, patternName) => {
+            let pattern = {
+                email: /^\w+@\w+\.\w{2,}$/,
+                phone: /^(?:\+7)|(?<!\+)8(\d){10}$/,
+                name: /^[а-яА-Я\s]*$/,
+                message: /^[а-яА-Я\s]*$/,
+            };
+            let rezult = pattern[patternName].test(input.value);
+            if (rezult) {
+                showSuccess(input);
+            } else { showError(input) };
+            return rezult;
+        };
+
+        const showError = (elem) => {
+            elem.classList.remove('success');
+            elem.classList.add('error');
+            if (elem.nextElementSibling && elem.nextElementSibling.classList.contains('validator-error')) return;
+            const errorDiv = document.createElement('div');
+            errorDiv.textContent = 'Ошибка в этом поле';
+            errorDiv.classList.add('validator-error');
+            elem.insertAdjacentElement('afterend', errorDiv);
+        };
+        const showSuccess = (elem) => {
+            elem.classList.remove('error');
+            elem.classList.add('success');
+            if (elem.nextElementSibling && elem.nextElementSibling.classList.contains('validator-error')) {
+                elem.nextElementSibling.remove();
+            };
+        };
+        const applyStyle = () => {
+            const style = document.createElement('style');
+            style.textContent = `
+            input.success {
+                border: 2px solid green;
+            }
+            input.error {
+                border: 2px solid red;
+            }
+            .validator-error {
+                font-size: 14px;
+                font-family: sans-serif;
+                color: red;
+            }
+            input {
+                border: none;
+            }
+            `
+            document.head.appendChild(style);
+        };
+
+        //Подключение обработчика событий к инпутам, чтобы цвет менялся сразу при изменении содержимого
+
+        form.forEach(item => {
+            applyStyle();
+            [...item.elements].forEach(it => {
+                if (it.tagName.toLowerCase() === 'input') {
+                    it.addEventListener('change', (e) => {
+                        validateInput(it, it.id.split('-')[1]);
+                    });
+                }
+            });
+        });
         //Подключение обработчика событий  к каждой форме
         form.forEach(item => {
             item.addEventListener('submit', (event) => {
@@ -262,7 +327,7 @@ window.addEventListener('DOMContentLoaded', () => {
                 // Проверка валидации (связь с Валидатором по классу success)
                 if ([...item.elements].every(it => {
                         if (it.tagName.toLowerCase() === 'input') {
-                            return it.classList.contains('success');
+                            return validateInput(it, it.id.split('-')[1]);
                         } else {
                             return true;
                         };
@@ -286,7 +351,10 @@ window.addEventListener('DOMContentLoaded', () => {
                             requestAnimationFrame(messageAnimateOpacity.bind(null, statusMessage));
                             statusMessage.textContent = successMessage;
                             //Очистка inputов
-                            [...item.elements].forEach(it => it.value = '');
+                            [...item.elements].forEach(it => {
+                                it.value = '';
+                                it.classList.remove('success');
+                            });
                         },
                         (error) => {
                             cancelAnimationFrame(idAniBlink);
@@ -315,6 +383,4 @@ window.addEventListener('DOMContentLoaded', () => {
         });
     };
     sendForm();
-
-
 });
