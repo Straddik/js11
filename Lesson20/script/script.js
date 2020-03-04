@@ -156,18 +156,7 @@ window.addEventListener('DOMContentLoaded', () => {
         });
     };
     tabs();
-    //добавляем элементы точки по домашнему заданию
-    const addingDots = (number, currentnumber) => {
-        const ulDots = document.querySelector('.portfolio-dots');
-        for (let i = 0; i < number; i++) {
-            let element = document.createElement('li');
-            element.classList.add('dot');
-            if (i === currentnumber) element.classList.add('dot-active');
-            ulDots.append(element);
-        };
-        return ulDots.querySelectorAll('.dot');
 
-    };
 
     //Пишем слайдер
     const slider = () => {
@@ -176,6 +165,18 @@ window.addEventListener('DOMContentLoaded', () => {
             slider = document.querySelector('.portfolio-content');
         let currentSlide = 0,
             interval;
+        //добавляем элементы точки по домашнему заданию
+        const addingDots = (number, currentnumber) => {
+            const ulDots = document.querySelector('.portfolio-dots');
+            for (let i = 0; i < number; i++) {
+                let element = document.createElement('li');
+                element.classList.add('dot');
+                if (i === currentnumber) element.classList.add('dot-active');
+                ulDots.append(element);
+            };
+            return ulDots.querySelectorAll('.dot');
+
+        };
         const dot = addingDots(slide.length, currentSlide);
         const prevSlide = (elem, index, strClass) => {
             elem[index].classList.remove(strClass);

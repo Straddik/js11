@@ -8,9 +8,8 @@
         const scrollAnimation = (elem, step, count) => {
             count++;
             let idReq = requestAnimationFrame(scrollAnimation.bind(null, elem, step, count));
-            document.documentElement.scrollTop += step;
-            console.log(document.documentElement.scrollTop, step);
-            if (elem.offsetTop < document.documentElement.scrollTop || (document.documentElement.scrollTop > (document.documentElement.offsetHeight - elem.offsetHeight - 300)) || count > 160)
+            document.body.scrollTop += step;
+            if (elem.offsetTop < document.body.scrollTop || (document.body.scrollTop > (document.body.offsetHeight - elem.offsetHeight - 300)) || count > 160)
                 cancelAnimationFrame(idReq);
         };
 
