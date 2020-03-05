@@ -29,7 +29,7 @@
                 timerSeconds.textContent = ('' + timer.seconds).length === 1 ? `0${timer.seconds}` : timer.seconds;
             };
         };
-
+        updateClock();
         let id = setInterval(updateClock, 1000);
     };
     export default countTimer;

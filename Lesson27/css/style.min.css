@@ -79,7 +79,7 @@ body textarea:focus {
 }
 
 body .menu:hover {
-    cursor: pointer
+    cursor: pointer;
 }
 
 body menu {
@@ -102,21 +102,21 @@ body menu {
     -ms-flex-pack: center;
     justify-content: center;
     -webkit-transform: translateX(-100%);
-    transform: translateX(-100%)
+    transform: translateX(-100%);
 }
 
 body .active-menu {
     -webkit-transition: 1s;
     transition: 1s;
     -webkit-transform: translateX(100%);
-    transform: translateX(100%)
+    transform: translateX(100%);
 }
 
 body ul {
     list-style: none;
     padding: 0;
     margin: 0;
-    line-height: 3
+    line-height: 3;
 }
 
 body li a {

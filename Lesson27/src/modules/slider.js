@@ -11,7 +11,7 @@ const slider = () => {
             let element = document.createElement('li');
             element.classList.add('dot');
             if (i === currentnumber) element.classList.add('dot-active');
-            ulDots.append(element);
+            ulDots.appendChild(element);
         };
         return ulDots.querySelectorAll('.dot');
     };

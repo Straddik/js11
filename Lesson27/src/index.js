@@ -1,13 +1,14 @@
 'use strict';
+import "@babel/polyfill";
 import elementClosest from 'element-closest';
 import 'formdata-polyfill';
 import 'es6-promise';
 import 'fetch-polyfill';
 import 'smoothscroll-polyfill';
 import 'nodelist-foreach-polyfill';
-import "@babel/polyfill";
+import 'regexp-polyfill';
 
-// smoothscroll.polyfill();
+
 elementClosest(window);
 
 import countTimer from './modules/countTimer';
@@ -22,6 +23,7 @@ import slider from './modules/slider';
 
 
 countTimer();
+
 
 toggleMenu();
 
