@@ -51,11 +51,11 @@
         const validateInput = (input, patternName) => {
             let pattern = {
                 //Чтобы во всех браузерах работало
-                email: new RegExp("^\\w+@\\w+\\.\\w{1,}\\w$\\b"),
+                email: new RegExp("^\\w+\\.?\\w+@\\w+\\.\\w{1,}\\w$\\b"),
                 phone: new RegExp("^\\+7\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\b|^8\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d\\b"),
                 //Это лишнее раз есть запрет, но я пока оставила
                 name: new RegExp("^[а-яА-Я\\s]|^[а-яА-Я\\s]+\\b"),
-                message: new RegExp("^[а-яА-Я\\s]+\\b"),
+                message: new RegExp("^[^a-zA-z]|^[^a-zA-Z]+\\b"),
             };
             let rezult = pattern[patternName].test(input.value);
             if (rezult) {
@@ -113,9 +113,14 @@
             [...item.elements].forEach(it => {
                 if (it.tagName.toLowerCase() === 'input') {
                     //Запретить ввод любых символов в поле "Ваше имя" и "Ваше сообщение", кроме Кириллицы и пробелов (задание 6)
-                    if (it.id.split('-')[1] === 'name' || it.id.split('-')[1] === 'message') {
+                    if (it.id.split('-')[1] === 'name') {
                         it.addEventListener('input', () => {
                             it.value = it.value.replace(/[^а-яА-Я\s]/, '');
+                        });
+                    };
+                    if (it.id.split('-')[1] === 'message') {
+                        it.addEventListener('input', () => {
+                            it.value = it.value.replace(/[a-zA-Z]/, '');
                         });
                     };
                     it.addEventListener('change', (e) => {
@@ -165,11 +170,18 @@
                                 it.value = '';
                                 it.classList.remove('success');
                             });
+                            setTimeout(() => {
+                                statusMessage.textContent = '';
+                            }, 5000);
                         }, )
                         .catch((error) => {
-                            cancelAnimationFrame(idAniBlink);
                             statusMessage.textContent = errorMessage;
                             console.error(error);
+                            setTimeout(() => {
+                                clearTimeout(idTime);
+                                cancelAnimationFrame(idAniBlink);
+                                statusMessage.textContent = '';
+                            }, 5000);
                         });
                 };
 
