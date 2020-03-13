@@ -19,6 +19,8 @@
         "webpack-dev-server": "^3.10.3"
     },
     "dependencies": {
-        "@babel/polyfill": "^7.8.7"
+        "@babel/polyfill": "^7.8.7",
+        "element-closest": "^3.0.2",
+        "nodelist-foreach-polyfill": "^1.2.0"
     }
 }
