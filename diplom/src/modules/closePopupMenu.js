@@ -1,6 +1,6 @@
 const closePopupMenu = () => {
     const menu = document.querySelector('.popup-menu');
-    if ((document.body.clientWidth + 50) <= 576) {
+    if (document.body.clientWidth <= 576) {
         menu.childNodes[1].style.transform = 'translate3d(0,-120vh,0)';
         menu.style.width = '100%';
     } else {
