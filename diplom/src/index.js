@@ -7,6 +7,4 @@ import 'nodelist-foreach-polyfill';
 elementClosest(window);
 import clickEventListener from './modules/click';
 
-
-
 clickEventListener();
