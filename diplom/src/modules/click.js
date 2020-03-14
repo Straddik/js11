@@ -1,8 +1,8 @@
 'use strict';
 
 import listPhone from "./listPhone";
-import popupMenu from "./popupMenu";
-import closePopupMenu from "./closePopupMenu";
+import { popupMenu } from "./popupMenu";
+import { closePopupMenu } from "./popupMenu";
 import scrollIt from "./scrollIt";
 import { popupRepair } from "./popupRepair";
 import { closePopupRepair } from "./popupRepair";
