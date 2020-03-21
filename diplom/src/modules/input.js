@@ -30,10 +30,10 @@ export const inputPhone = () => {
             }
         }
     });
+    //Запрет ввода всего кроме цифр
     body.addEventListener('input', (e) => {
         if (e.target.hasAttribute('name')) {
             if (e.target.getAttribute('name') === 'phone') {
-                console.log(e.type);
                 ban(e.target, e.target.selectionStart);
             }
         }

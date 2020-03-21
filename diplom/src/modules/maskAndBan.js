@@ -1,4 +1,5 @@
 let mode = true;
+
 export const maskAndBan = (element, position, key) => {
     if (key >= 0 && key < 10) {
         mode = true;
@@ -58,12 +59,4 @@ export const ban = (elem, pos) => {
         elem.setSelectionRange(pos - 1, pos - 1);
     }
     mode = true;
-
 };
-// export const ban = (elem, pos) => {
-//     const reg = new RegExp('[^\\d]');
-//     console.log(reg.test(elem.value.slice(pos - 1, pos)));
-//     elem.value = elem.value.slice(0, pos - 1) + elem.value.slice(pos - 1, pos).replace(reg, '_') + elem.value.slice(pos, );
-//     elem.setSelectionRange(pos, pos);
-//     console.log(elem.value.slice(pos - 1, pos).match(reg));
-// };
