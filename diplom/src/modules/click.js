@@ -6,6 +6,9 @@ import { closePopupMenu } from "./popupMenu";
 import scrollIt from "./scrollIt";
 import { popupRepair } from "./popupRepair";
 import { closePopupRepair } from "./popupRepair";
+import { popupPrivacy } from "./popupPrivacy";
+import { closePrivacy } from "./popupPrivacy";
+import { moveFormulaRight, moveFormulaLeft } from "./mobileFormula";
 
 const clickEventListener = () => {
     const body = document.querySelector('body');
@@ -30,6 +33,14 @@ const clickEventListener = () => {
             } else {
                 scrollIt(target, 'up');
             };
+        } else if (target.closest('.link-privacy')) {
+            popupPrivacy();
+        } else if (target.classList.contains('popup-privacy')) {
+            closePrivacy();
+        } else if (target.closest('#formula-arrow_right')) {
+            moveFormulaRight();
+        } else if (target.closest('#formula-arrow_left')) {
+            moveFormulaLeft();
         } else if (target.closest('.popup-menu')) {
             closePopupMenu();
         } else if (target.classList.contains('popup-repair-types') || target.closest('.close')) {

@@ -8,7 +8,11 @@ elementClosest(window);
 import clickEventListener from './modules/click';
 import adaptMenu from './modules/adaptMenu';
 import { inputPhone } from './modules/input';
+import mouseListener from "./modules/mouse";
+import { mobileFormula } from "./modules/mobileFormula";
 
 clickEventListener();
 adaptMenu();
 inputPhone();
+mouseListener();
+mobileFormula();

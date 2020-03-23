@@ -2,6 +2,7 @@ import { maskAndBan } from "./maskAndBan";
 import { mask } from "./maskAndBan";
 import { ban } from "./maskAndBan";
 
+
 export const inputPhone = () => {
     const body = document.querySelector('body');
     //Отмена выделения в инпутах, чтобы не менялась маска
