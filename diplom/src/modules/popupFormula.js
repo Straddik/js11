@@ -31,5 +31,4 @@ export const closeFormula = (elem) => {
     hist.style.opacity = '0';
     hist.childNodes[0].style.transform = 'rotate(0deg)';
     hist.nextElementSibling.style.opacity = '0';
-
 };

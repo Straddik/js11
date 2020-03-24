@@ -9,6 +9,7 @@ import { closePopupRepair } from "./popupRepair";
 import { popupPrivacy } from "./popupPrivacy";
 import { closePrivacy } from "./popupPrivacy";
 import { moveFormulaRight, moveFormulaLeft } from "./mobileFormula";
+import { changeRepairType, moveRepairLeft, moveRepairRight, moveRepairMobileLeft, moveRepairMobileRight } from "./repairType";
 
 const clickEventListener = () => {
     const body = document.querySelector('body');
@@ -41,6 +42,16 @@ const clickEventListener = () => {
             moveFormulaRight();
         } else if (target.closest('#formula-arrow_left')) {
             moveFormulaLeft();
+        } else if (target.closest('.repair-types-nav__item')) {
+            changeRepairType(e.target);
+        } else if (target.closest('#repair-types-arrow_left')) {
+            moveRepairLeft();
+        } else if (target.closest('#repair-types-arrow_right')) {
+            moveRepairRight();
+        } else if (target.closest('#nav-arrow-repair-left_base')) {
+            moveRepairMobileLeft();
+        } else if (target.closest('#nav-arrow-repair-right_base')) {
+            moveRepairMobileRight();
         } else if (target.closest('.popup-menu')) {
             closePopupMenu();
         } else if (target.classList.contains('popup-repair-types') || target.closest('.close')) {
