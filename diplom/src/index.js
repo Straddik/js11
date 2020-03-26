@@ -11,6 +11,7 @@ import { inputPhone } from './modules/input';
 import mouseListener from "./modules/mouse";
 import { mobileFormula } from "./modules/mobileFormula";
 import { changeRepairType } from "./modules/repairType";
+import { portfolioLoad } from "./modules/portfolio";
 
 clickEventListener();
 adaptMenu();
@@ -18,3 +19,4 @@ inputPhone();
 mouseListener();
 mobileFormula();
 changeRepairType(document.querySelector('.repair-types-nav__item-1'));
+portfolioLoad();

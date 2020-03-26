@@ -1,3 +1,5 @@
+import { moveLeft, moveRight } from "./moveLeftAndRight";
+
 const mobile = document.querySelector('.formula-slider');
 export const mobileFormula = () => {
     mobile.style.display = 'flex';
@@ -24,9 +26,7 @@ export const mobileFormula = () => {
     });
 }
 export const moveFormulaLeft = () => {
-    const elem = mobile.lastElementChild.cloneNode(true);
-    mobile.lastElementChild.remove();
-    mobile.prepend(elem);
+    moveLeft(mobile);
     [...mobile.children].forEach((item, index) => {
         if (index === 1) {
             item.style.opacity = '1';
@@ -37,9 +37,7 @@ export const moveFormulaLeft = () => {
 };
 
 export const moveFormulaRight = () => {
-    const elem = mobile.firstElementChild.cloneNode(true);
-    mobile.firstElementChild.remove();
-    mobile.append(elem);
+    moveRight(mobile);
     [...mobile.children].forEach((item, index) => {
         if (index === 1) {
             item.style.opacity = '1';

@@ -1,3 +1,5 @@
+import { moveLeft, moveRight } from "./moveLeftAndRight";
+
 let repairType;
 const counterTotal = document.querySelector('.slider-counter-content__total');
 const counterCurrent = document.querySelector('.slider-counter-content__current');
@@ -12,7 +14,6 @@ export const changeRepairType = (elem) => {
     });
     nav.style.display = 'block';
     [...nav.children].forEach((item, index) => {
-        console.log(!item.classList.contains(`${index+1}`));
         if (!item.classList.contains(`${index+1}`)) {
             item.classList.add(`${index+1}`);
         }
@@ -22,25 +23,18 @@ export const changeRepairType = (elem) => {
     counterCurrent.innerHTML = nav.firstElementChild.className.match(reg)[0];
 };
 
+
 export const moveRepairLeft = () => {
-    const elem = repairType.lastElementChild.cloneNode(true);
-    repairType.lastElementChild.remove();
-    repairType.prepend(elem);
+    moveLeft(repairType);
     counterCurrent.innerHTML = repairType.firstElementChild.className.match(reg)[0];
 };
 export const moveRepairRight = () => {
-    const elem = repairType.firstElementChild.cloneNode(true);
-    repairType.firstElementChild.remove();
-    repairType.append(elem);
+    moveRight(repairType);
     counterCurrent.innerHTML = repairType.firstElementChild.className.match(reg)[0];
 };
 export const moveRepairMobileLeft = () => {
-    const elem = navMobile.lastElementChild.cloneNode(true);
-    navMobile.lastElementChild.remove();
-    navMobile.prepend(elem);
+    moveLeft(navMobile);
 };
 export const moveRepairMobileRight = () => {
-    const elem = navMobile.firstElementChild.cloneNode(true);
-    navMobile.firstElementChild.remove();
-    navMobile.append(elem);
+    moveRight(navMobile);
 };

@@ -10,6 +10,7 @@ import { popupPrivacy } from "./popupPrivacy";
 import { closePrivacy } from "./popupPrivacy";
 import { moveFormulaRight, moveFormulaLeft } from "./mobileFormula";
 import { changeRepairType, moveRepairLeft, moveRepairRight, moveRepairMobileLeft, moveRepairMobileRight } from "./repairType";
+import { movePortfolioLeft, movePortfolioRight, movePortfolioMobileLeft, movePortfolioMobileRight } from "./portfolio";
 
 const clickEventListener = () => {
     const body = document.querySelector('body');
@@ -52,6 +53,14 @@ const clickEventListener = () => {
             moveRepairMobileLeft();
         } else if (target.closest('#nav-arrow-repair-right_base')) {
             moveRepairMobileRight();
+        } else if (target.closest('#portfolio-arrow_left')) {
+            movePortfolioLeft();
+        } else if (target.closest('#portfolio-arrow_right')) {
+            movePortfolioRight();
+        } else if (target.closest('#portfolio-arrow-mobile_left')) {
+            movePortfolioMobileLeft();
+        } else if (target.closest('#portfolio-arrow-mobile_right')) {
+            movePortfolioMobileRight();
         } else if (target.closest('.popup-menu')) {
             closePopupMenu();
         } else if (target.classList.contains('popup-repair-types') || target.closest('.close')) {
