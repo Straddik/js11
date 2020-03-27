@@ -10,8 +10,13 @@ const counterCurrent = document.getElementById('portfolio-counter').children[0].
 const reg = new RegExp('\\d{1,2}');
 
 export const portfolioLoad = () => {
+    let i = 1;
     [...portfolio.children].forEach((item, index) => {
         item.classList.add(`${index+1}`);
+        [...item.children].forEach(val => {
+            val.classList.add(`${i}`);
+            i++;
+        })
     });
     [...portfolioMobile.children].forEach((item, index) => {
         item.classList.add(`${index+1}`);
@@ -20,6 +25,7 @@ export const portfolioLoad = () => {
     arrowMobileLeft.style.zIndex = '11';
     arrowMobileRight.style.zIndex = '11';
     counterTotal.innerHTML = portfolioMobile.children.length;
+
 };
 
 export const movePortfolioLeft = () => {
