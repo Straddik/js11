@@ -4,8 +4,8 @@ const popupPortfolio = document.querySelector('.popup-portfolio');
 const popupPortfolioSlider = document.querySelector('.popup-portfolio-slider');
 const counterPortfolioSliderCurrent = document.getElementById('popup-portfolio-counter').children[0].children[0];
 const counterPortfolioSliderTotal = document.getElementById('popup-portfolio-counter').children[0].children[1];
-const arrowLeftPopupPortfolio = document.getElementById('popup_portfolio_left');
-const arrowLeRightPopupPortfolio = document.getElementById('popup_portfolio_right');
+// const arrowLeftPopupPortfolio = document.getElementById('popup_portfolio_left');
+// const arrowLeRightPopupPortfolio = document.getElementById('popup_portfolio_right');
 let portfolioText, indexSlide;
 
 const reg = new RegExp('\\d{1,2}');

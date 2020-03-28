@@ -11,6 +11,7 @@ const appearanceRightArrow = () => {
 };
 const portfolio = document.querySelector('.portfolio-slider');
 const portfolioMobile = document.querySelector('.portfolio-slider-mobile');
+const transparencyMobile = document.getElementById('transparency').children[0].children[3].children[0];
 const adaptMenu = () => {
     window.addEventListener('resize', () => {
         const menu = document.querySelector('.popup-dialog-menu');
@@ -44,6 +45,20 @@ const adaptMenu = () => {
                 menu.style.transform = 'translate3d(645px,0,0)';
             }
         };
+        if (screen.width < 545) {
+            transparencyMobile.style.display = 'flex';
+            transparencyMobile.style.flexWrap = 'nowrap';
+            [...transparencyMobile.children].forEach((item, index) => {
+                item.style.flex = "0 0 100%";
+            });
+        } else {
+            transparencyMobile.style.flexWrap = 'wrap';
+            [...transparencyMobile.children].forEach((item, index) => {
+                item.style.flex = "auto";
+            });
+        }
+
+
     })
 };
 

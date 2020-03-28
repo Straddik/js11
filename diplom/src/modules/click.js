@@ -12,6 +12,7 @@ import { moveFormulaRight, moveFormulaLeft } from "./mobileFormula";
 import { changeRepairType, moveRepairLeft, moveRepairRight, moveRepairMobileLeft, moveRepairMobileRight } from "./repairType";
 import { movePortfolioLeft, movePortfolioRight, movePortfolioMobileLeft, movePortfolioMobileRight } from "./portfolio";
 import { openPopupPortfolio, closePopupPortfolio, moveRightPopupPortfolio, moveLeftPopupPortfolio } from "./popupPortfolio";
+import { moveTransparencyMobileLeft, moveTransparencyMobileRight, popupTransparency, closeTransparency, moveTransparencyPopupLeft, moveTransparencyPopupRight } from "./transparency";
 
 const clickEventListener = () => {
     const body = document.querySelector('body');
@@ -62,12 +63,24 @@ const clickEventListener = () => {
             moveLeftPopupPortfolio();
         } else if (target.closest('#popup_portfolio_right')) {
             moveRightPopupPortfolio();
+        } else if (target.closest('#transparency-arrow_left')) {
+            moveTransparencyMobileLeft();
+        } else if (target.closest('#transparency-arrow_right')) {
+            moveTransparencyMobileRight();
+        } else if (target.closest('#transparency_left')) {
+            moveTransparencyPopupLeft();
+        } else if (target.closest('#transparency_right')) {
+            moveTransparencyPopupRight();
+        } else if (target.closest('.close') && target.closest('.popup-transparency')) {
+            closeTransparency();
         } else if (target.closest('#portfolio-arrow-mobile_left')) {
             movePortfolioMobileLeft();
         } else if (target.closest('.portfolio-slider__slide')) {
             openPopupPortfolio(target);
         } else if (target.closest('#portfolio-arrow-mobile_right')) {
             movePortfolioMobileRight();
+        } else if (target.closest('.transparency-item__img')) {
+            popupTransparency(target);
         } else if (!target.closest('.popup-dialog-portfolio') && target.closest('.popup-portfolio')) {
             closePopupPortfolio();
         } else if (target.closest('.popup-menu')) {

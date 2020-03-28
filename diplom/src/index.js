@@ -13,6 +13,7 @@ import { mobileFormula } from "./modules/mobileFormula";
 import { changeRepairType } from "./modules/repairType";
 import { portfolioLoad } from "./modules/portfolio";
 import { prepairPopupPortfolio } from "./modules/popupPortfolio";
+import { prepairTransparency } from "./modules/transparency";
 
 clickEventListener();
 adaptMenu();
@@ -22,3 +23,4 @@ mobileFormula();
 changeRepairType(document.querySelector('.repair-types-nav__item-1'));
 portfolioLoad();
 prepairPopupPortfolio();
+prepairTransparency();
