@@ -14,6 +14,7 @@ import { changeRepairType } from "./modules/repairType";
 import { portfolioLoad } from "./modules/portfolio";
 import { prepairPopupPortfolio } from "./modules/popupPortfolio";
 import { prepairTransparency } from "./modules/transparency";
+import { prepairProblem } from "./modules/problems";
 
 clickEventListener();
 adaptMenu();
@@ -24,3 +25,4 @@ changeRepairType(document.querySelector('.repair-types-nav__item-1'));
 portfolioLoad();
 prepairPopupPortfolio();
 prepairTransparency();
+prepairProblem();

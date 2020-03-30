@@ -13,6 +13,7 @@ import { changeRepairType, moveRepairLeft, moveRepairRight, moveRepairMobileLeft
 import { movePortfolioLeft, movePortfolioRight, movePortfolioMobileLeft, movePortfolioMobileRight } from "./portfolio";
 import { openPopupPortfolio, closePopupPortfolio, moveRightPopupPortfolio, moveLeftPopupPortfolio } from "./popupPortfolio";
 import { moveTransparencyMobileLeft, moveTransparencyMobileRight, popupTransparency, closeTransparency, moveTransparencyPopupLeft, moveTransparencyPopupRight } from "./transparency";
+import { moveProblemMobileLeft, moveProblemMobileRight } from "./problems";
 
 const clickEventListener = () => {
     const body = document.querySelector('body');
@@ -71,6 +72,10 @@ const clickEventListener = () => {
             moveTransparencyPopupLeft();
         } else if (target.closest('#transparency_right')) {
             moveTransparencyPopupRight();
+        } else if (target.closest('#problems-arrow_left')) {
+            moveProblemMobileLeft(target.closest('#problems-arrow_left').parentNode);
+        } else if (target.closest('#problems-arrow_right')) {
+            moveProblemMobileRight(target.closest('#problems-arrow_right').parentNode);
         } else if (target.closest('.close') && target.closest('.popup-transparency')) {
             closeTransparency();
         } else if (target.closest('#portfolio-arrow-mobile_left')) {
