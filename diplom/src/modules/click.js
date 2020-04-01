@@ -15,6 +15,7 @@ import { openPopupPortfolio, closePopupPortfolio, moveRightPopupPortfolio, moveL
 import { moveTransparencyMobileLeft, moveTransparencyMobileRight, popupTransparency, closeTransparency, moveTransparencyPopupLeft, moveTransparencyPopupRight } from "./transparency";
 import { moveProblemMobileLeft, moveProblemMobileRight } from "./problems";
 import { openDesignSlider, changeDesignSlider, moveNavDesignLeft, moveNavDesignRight, popupDesign, closePopupDesign, movePopupDesignSliderLeft, movePopupDesignSliderRight } from "./design";
+import { moveReviewLeft, moveReviewRight, openPopupConsult, closePopupConsult } from "./review";
 
 const clickEventListener = () => {
     const body = document.querySelector('body');
@@ -77,6 +78,10 @@ const clickEventListener = () => {
             moveProblemMobileLeft(target.closest('#problems-arrow_left').parentNode);
         } else if (target.closest('#problems-arrow_right')) {
             moveProblemMobileRight(target.closest('#problems-arrow_right').parentNode);
+        } else if (target.closest('#reviews-arrow_left')) {
+            moveReviewLeft();
+        } else if (target.closest('#reviews-arrow_right')) {
+            moveReviewRight();
         } else if (target.closest('.close') && target.closest('.popup-transparency')) {
             closeTransparency();
         } else if (target.closest('#portfolio-arrow-mobile_left')) {
@@ -101,6 +106,10 @@ const clickEventListener = () => {
             movePopupDesignSliderLeft();
         } else if (target.closest('#popup_design_right')) {
             movePopupDesignSliderRight();
+        } else if (target.closest('.button_wide')) {
+            openPopupConsult();
+        } else if (target.closest('.popup-consultation') && target.closest('.close')) {
+            closePopupConsult();
         } else if (target.closest('.preview-block__item')) {
             changeDesignSlider(target.closest('.preview-block__item'));
         } else if (!target.closest('.popup-dialog-portfolio') && target.closest('.popup-portfolio')) {
