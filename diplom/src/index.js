@@ -15,6 +15,7 @@ import { portfolioLoad } from "./modules/portfolio";
 import { prepairPopupPortfolio } from "./modules/popupPortfolio";
 import { prepairTransparency } from "./modules/transparency";
 import { prepairProblem } from "./modules/problems";
+import { prepairDesign } from "./modules/design";
 
 clickEventListener();
 adaptMenu();
@@ -26,3 +27,4 @@ portfolioLoad();
 prepairPopupPortfolio();
 prepairTransparency();
 prepairProblem();
+prepairDesign();

@@ -14,6 +14,7 @@ import { movePortfolioLeft, movePortfolioRight, movePortfolioMobileLeft, movePor
 import { openPopupPortfolio, closePopupPortfolio, moveRightPopupPortfolio, moveLeftPopupPortfolio } from "./popupPortfolio";
 import { moveTransparencyMobileLeft, moveTransparencyMobileRight, popupTransparency, closeTransparency, moveTransparencyPopupLeft, moveTransparencyPopupRight } from "./transparency";
 import { moveProblemMobileLeft, moveProblemMobileRight } from "./problems";
+import { openDesignSlider, changeDesignSlider, moveNavDesignLeft, moveNavDesignRight, popupDesign, closePopupDesign, movePopupDesignSliderLeft, movePopupDesignSliderRight } from "./design";
 
 const clickEventListener = () => {
     const body = document.querySelector('body');
@@ -86,6 +87,22 @@ const clickEventListener = () => {
             movePortfolioMobileRight();
         } else if (target.closest('.transparency-item__img')) {
             popupTransparency(target);
+        } else if (target.closest('.designs-nav__item')) {
+            openDesignSlider(target);
+        } else if (target.closest('.link-list-designs') && target.closest('a')) {
+            popupDesign();
+        } else if (target.closest('.popup-design') && target.closest('.close')) {
+            closePopupDesign();
+        } else if (target.closest('#nav-arrow-designs_left')) {
+            moveNavDesignLeft();
+        } else if (target.closest('#nav-arrow-designs_right')) {
+            moveNavDesignRight();
+        } else if (target.closest('#popup_design_left')) {
+            movePopupDesignSliderLeft();
+        } else if (target.closest('#popup_design_right')) {
+            movePopupDesignSliderRight();
+        } else if (target.closest('.preview-block__item')) {
+            changeDesignSlider(target.closest('.preview-block__item'));
         } else if (!target.closest('.popup-dialog-portfolio') && target.closest('.popup-portfolio')) {
             closePopupPortfolio();
         } else if (target.closest('.popup-menu')) {
