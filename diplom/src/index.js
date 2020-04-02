@@ -17,6 +17,7 @@ import { prepairTransparency } from "./modules/transparency";
 import { prepairProblem } from "./modules/problems";
 import { prepairDesign } from "./modules/design";
 import { prepairCheme } from "./modules/scheme";
+import { prepairAccordion } from "./modules/accordion";
 
 clickEventListener();
 adaptMenu();
@@ -30,3 +31,4 @@ prepairTransparency();
 prepairProblem();
 prepairDesign();
 prepairCheme();
+prepairAccordion();
