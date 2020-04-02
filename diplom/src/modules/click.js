@@ -18,6 +18,7 @@ import { openDesignSlider, changeDesignSlider, moveNavDesignLeft, moveNavDesignR
 import { moveReviewLeft, moveReviewRight, openPopupConsult, closePopupConsult } from "./review";
 import { switchScheme } from "./scheme";
 import { activeAccordion } from "./accordion";
+import { movePartnersLeft, movePartnersRight } from "./partners";
 
 const clickEventListener = () => {
     const body = document.querySelector('body');
@@ -112,6 +113,10 @@ const clickEventListener = () => {
             switchScheme(target.closest('.scheme-nav__item'));
         } else if (target.closest('.title_block ')) {
             activeAccordion(target.closest('.title_block '));
+        } else if (target.closest('#partners-arrow_left')) {
+            movePartnersLeft();
+        } else if (target.closest('#partners-arrow_right')) {
+            movePartnersRight();
         } else if (target.closest('.button_wide')) {
             openPopupConsult();
         } else if (target.closest('.popup-consultation') && target.closest('.close')) {

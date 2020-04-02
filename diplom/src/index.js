@@ -18,6 +18,7 @@ import { prepairProblem } from "./modules/problems";
 import { prepairDesign } from "./modules/design";
 import { prepairCheme } from "./modules/scheme";
 import { prepairAccordion } from "./modules/accordion";
+import { prepairPartners } from "./modules/partners";
 
 clickEventListener();
 adaptMenu();
@@ -32,3 +33,4 @@ prepairProblem();
 prepairDesign();
 prepairCheme();
 prepairAccordion();
+prepairPartners();
