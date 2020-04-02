@@ -16,6 +16,7 @@ import { moveTransparencyMobileLeft, moveTransparencyMobileRight, popupTranspare
 import { moveProblemMobileLeft, moveProblemMobileRight } from "./problems";
 import { openDesignSlider, changeDesignSlider, moveNavDesignLeft, moveNavDesignRight, popupDesign, closePopupDesign, movePopupDesignSliderLeft, movePopupDesignSliderRight } from "./design";
 import { moveReviewLeft, moveReviewRight, openPopupConsult, closePopupConsult } from "./review";
+import { switchScheme } from "./scheme";
 
 const clickEventListener = () => {
     const body = document.querySelector('body');
@@ -106,6 +107,8 @@ const clickEventListener = () => {
             movePopupDesignSliderLeft();
         } else if (target.closest('#popup_design_right')) {
             movePopupDesignSliderRight();
+        } else if (target.closest('.scheme-nav__item')) {
+            switchScheme(target.closest('.scheme-nav__item'));
         } else if (target.closest('.button_wide')) {
             openPopupConsult();
         } else if (target.closest('.popup-consultation') && target.closest('.close')) {

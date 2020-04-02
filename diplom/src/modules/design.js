@@ -18,7 +18,7 @@ export const prepairDesign = () => {
     });
     [...designsListButtons.children].forEach((item, index) => {
         item.classList.add(`${index+1}`);
-        item.style.flex = '0 0 33%';
+
     });
     [...designSlider.children].forEach(item => {
         [...item.children].forEach((i, n) => {

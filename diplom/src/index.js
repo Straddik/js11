@@ -16,6 +16,7 @@ import { prepairPopupPortfolio } from "./modules/popupPortfolio";
 import { prepairTransparency } from "./modules/transparency";
 import { prepairProblem } from "./modules/problems";
 import { prepairDesign } from "./modules/design";
+import { prepairCheme } from "./modules/scheme";
 
 clickEventListener();
 adaptMenu();
@@ -28,3 +29,4 @@ prepairPopupPortfolio();
 prepairTransparency();
 prepairProblem();
 prepairDesign();
+prepairCheme();
